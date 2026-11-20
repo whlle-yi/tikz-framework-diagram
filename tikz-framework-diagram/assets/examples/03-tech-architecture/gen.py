@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""图3 流程图生成器：坐标用原图像素，1px = 1/72cm = 0.3937pt"""
+"""技术架构图生成器：分层架构（左侧竖排标签 + 内嵌块箭头）"""
 
 PX2PT = 72/2.54/72     # = 0.3937 (1 unit = 1/72cm, 1pt=1/72in)
 def pt(px): return px*PX2PT
@@ -170,7 +170,7 @@ for (x0,x1,t) in [(267,448,"仿真试验验证"),(471,653,"实物样机测试"),
     box(x0,1349,x1,1406,t)
 
 tex = r"""% !TEX program = xelatex
-% 流程图 TikZ 矢量复刻（水印已去除）；坐标 = 原图像素，1px = 1/72cm
+% 技术架构图 —— TikZ 矢量图；1 单位 = 1/72cm
 \documentclass[tikz,border=6pt]{standalone}
 \usepackage{xeCJK}
 \setCJKmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]

@@ -75,12 +75,9 @@ skills 目录通常在用户主目录下（如 `~/.claude/skills/`），也可�
     │   ├── 04-text.md               中文排版：字号层级、逐字逐行定位、断行
     │   ├── 05-tex-setup.md          工程配置：单位换算、字体、线宽、颜色
     │   ├── 06-checklist.md          交付前 12 项自检
-    │   ├── 07-align-to-reference.md 附：需要与既有位图对齐时的度量与叠色方法
-    │   └── 08-pitfalls.md           16 条踩坑
+    │   └── 08-pitfalls.md           15 条踩坑
     ├── scripts/
-    │   ├── scaffold.py              生成器骨架（主工具）
-    │   ├── measure.py               几何测量 CLI（配合 07 使用）
-    │   └── overlay.py               红蓝叠色比对（配合 07 使用）
+    │   └── scaffold.py              生成器骨架
     └── assets/examples/             三份可直接编译的成品
 ```
 
@@ -101,7 +98,7 @@ python gen.py && xelatex fig.tex        # 改 gen.py 里的坐标表，重跑即
 - 需要还原阴影、渐变、滤镜的效果图
 - 数据可视化（那应该用 pgfplots / matplotlib，不是这套骨架）
 
-字体差异无法做到与任何参照图逐像素一致；这套技能追求的是**风格统一、排版规整**，不是像素级复制。
+输出为纯矢量 PDF，缩放不失真，字体嵌入后可直接送印。
 
 ## License
 

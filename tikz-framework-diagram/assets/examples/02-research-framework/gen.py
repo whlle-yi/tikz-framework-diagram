@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""根据从原图量得的像素坐标生成 TikZ 代码（1px = 1/72cm）"""
+"""研究框架图生成器：三列框架，坐标用栅格单位（1 单位 = 1/72cm）"""
 
 BOX_FILL   = "cbox"   # 内容白框
 COL_FILL   = "ccol"   # 左右两列
@@ -36,7 +36,7 @@ def hollow_down(cx,y0,y1,sw=26,hh=12,hw=55):
       f"({cx-sw/2:.1f},{yh:.1f}) -- cycle;")
 
 # ============ 头部 ============
-# 背景不绘制：原图的浅色底是截图页面背景，不属于流程图
+# 不画页面底色：白底由 PDF 自带
 
 # 顶部三个框
 box(143,52,281,97,"研究步骤",TOP_FILL,True,7.0)
@@ -168,9 +168,9 @@ line(611,1329,611,1345,arrow=True)
 box(313,1345,909,1389,"为城市街旁绿地的恢复性提升和交通噪声治理提供科学依据",HDR_FILL,True,6.9)
 
 tex = r"""% !TEX program = xelatex
-% 研究框架图 —— TikZ 矢量复刻（水印已去除）
-% 坐标系：x=1/72cm, y=-1/72cm，即直接使用原图像素坐标（1px = 1/72 cm）
-% 纵向 y 取负值，图像向下为正
+% 研究框架图 —— TikZ 矢量图
+% 坐标系：x=1/72cm, y=-1/72cm，1 单位 = 1 栅格
+% y 取负：向下为正
 \documentclass[tikz,border=6pt]{standalone}
 \usepackage{xeCJK}
 \setCJKmainfont{Microsoft YaHei}
