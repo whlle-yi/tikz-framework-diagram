@@ -1,171 +1,242 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""示例 05：城市内涝实时预警系统 —— 泳道式技术路线，单色 + 彩色两版。
+"""示例 05：城市内涝实时预警系统 —— 多图元组合，单色与彩色两版。
 
-结构：顶部问题横幅 → 四条泳道（感知 / 数据 / 模型 / 服务），每条 6 个环节
-      → 底部汇合到成果横幅。同一份几何出两版配色，放在一个 LaTeX 文件里。
+图元：数据库圆柱、立体折角卡片、胶囊标题、分层虚线容器、左侧竖排标签、
+      内嵌右向块箭头、层间空心块箭头、双向箭头、1→4 树形支架、结论条。
     python gen.py && xelatex fig.tex
 """
 OUT = []
 def w(s): OUT.append(s)
 LW = 0.7
 
-# ---------------- 图元 ----------------
-def node(cx, cy, text, fs=8.3, color="black", bold=False):
+# ---------------- 基础图元 ----------------
+def node(cx, cy, t, fs=8.3, color="black", bold=False):
     b = r"\bfseries " if bold else ""
     w(f"\\node[align=center,inner sep=0pt,outer sep=0pt,"
-      f"font=\\fontsize{{{fs}}}{{{fs * 1.4:.2f}}}\\selectfont,text={color}] "
-      f"at ({cx:.1f},{cy:.1f}) {{{b}{text}}};")
+      f"font=\\fontsize{{{fs}}}{{{fs*1.4:.2f}}}\\selectfont,text={color}] "
+      f"at ({cx:.1f},{cy:.1f}) {{{b}{t}}};")
 
 
-
-def two(cx, cy, t1, t2, fs1=8.3, fs2=6.6, color="black", gap=1.0):
-    """框内两行：主标题 + 小字说明，交给 LaTeX 自己排行距。"""
+def two(cx, cy, t1, t2, fs1=8.3, fs2=6.6, color="black", gap=1.2):
     body = ("{\\fontsize{%.2f}{%.2f}\\selectfont\\bfseries %s}\\\\[%.2fpt]"
             "{\\fontsize{%.2f}{%.2f}\\selectfont %s}") % (
         fs1, fs1 * 1.15, t1, gap, fs2, fs2 * 1.2, t2)
-    w("\\node[align=center,inner sep=0pt,outer sep=0pt,text=%s] at (%.1f,%.1f) {%s};" % (color, cx, cy, body))
+    w("\\node[align=center,inner sep=0pt,outer sep=0pt,text=%s] at (%.1f,%.1f) {%s};"
+      % (color, cx, cy, body))
 
 
-def stage(x0, y0, x1, y1, title, note, deep, tcol=None):
-    """一个环节：圆角框 + 主标题 + 小字说明。"""
-    w(f"\\draw[draw={deep},line width={LW}pt,fill=white,rounded corners=7/72cm] "
+def rect(x0, y0, x1, y1, r=0, fill="white", stroke="black", lw=LW):
+    st = f"draw={stroke},line width={lw}pt,fill={fill}"
+    if r:
+        st += f",rounded corners={r/72:.4f}cm"
+    w(f"\\draw[{st}] ({x0:.1f},{y0:.1f}) rectangle ({x1:.1f},{y1:.1f});")
+
+
+def dashed(x0, y0, x1, y1, stroke):
+    w(f"\\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw={stroke}] "
       f"({x0:.1f},{y0:.1f}) rectangle ({x1:.1f},{y1:.1f});")
-    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
-    two(cx, cy, title, note, 8.3, 6.6, tcol or deep)
 
 
-def arrow_down(cx, y0, y1, stroke, size=1.3):
-    w(f"\\draw[line width={LW}pt,draw={stroke},-{{Latex[length={size}mm,width=0.9mm]}}] "
-      f"({cx:.1f},{y0:.1f}) -- ({cx:.1f},{y1:.1f});")
+def varrow(cx, y0, y1, stroke, sw=34, hw=76, hh=18):
+    assert y1 - y0 >= hh + 8, f"箭头太矮 {y1-y0}"
+    yh = y1 - hh
+    w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
+      f"({cx-sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{yh:.1f}) -- "
+      f"({cx+hw/2:.1f},{yh:.1f}) -- ({cx:.1f},{y1:.1f}) -- ({cx-hw/2:.1f},{yh:.1f}) -- "
+      f"({cx-sw/2:.1f},{yh:.1f}) -- cycle;")
 
 
-def arrow_right(y, x0, x1, stroke):
-    w(f"\\draw[line width={LW}pt,draw={stroke},-{{Latex[length=1.4mm,width=1.0mm]}}] "
-      f"({x0:.1f},{y:.1f}) -- ({x1:.1f},{y:.1f});")
+def label_box(x0, y0, x1, y1, text, stroke):
+    """左侧竖排标签 + 内嵌右向块箭头（箭尾与框共边）。"""
+    cy = (y0 + y1) / 2
+    sh, hd = 12, 23          # 轴半高 / 头半高
+    xsh, xhd = x1 + 14, x1 + 46
+    w(f"\\draw[line width={LW}pt,draw={stroke}] ({x0:.1f},{y1:.1f}) -- ({x0:.1f},{y0:.1f}) -- "
+      f"({x1:.1f},{y0:.1f}) -- ({x1:.1f},{cy-sh:.1f});")
+    w(f"\\draw[line width={LW}pt,fill=white,draw={stroke}] ({x1:.1f},{cy-sh:.1f}) -- "
+      f"({xsh:.1f},{cy-sh:.1f}) -- ({xsh:.1f},{cy-hd:.1f}) -- ({xhd:.1f},{cy:.1f}) -- "
+      f"({xsh:.1f},{cy+hd:.1f}) -- ({xsh:.1f},{cy+sh:.1f}) -- ({x1:.1f},{cy+sh:.1f});")
+    w(f"\\draw[line width={LW}pt,draw={stroke}] ({x1:.1f},{cy+sh:.1f}) -- ({x1:.1f},{y1:.1f}) -- "
+      f"({x0:.1f},{y1:.1f});")
+    n = len(text)
+    pitch = min((y1 - y0 - 26) / n, 46)
+    y_first = y0 + ((y1 - y0) - (n - 1) * pitch) / 2
+    for i, ch in enumerate(text):
+        node((x0 + x1) / 2, y_first + pitch * i, ch, 8.6, stroke)
 
 
-def line(x0, y0, x1, y1, stroke, lw=LW):
-    w(f"\\draw[line width={lw}pt,draw={stroke}] ({x0:.1f},{y0:.1f}) -- ({x1:.1f},{y1:.1f});")
+def cylinder(cx, y0, y1, rx, ry, text, stroke):
+    k = 0.5523 * ry
+    w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
+      f"({cx-rx:.1f},{y0:.1f}) -- ({cx-rx:.1f},{y1:.1f}) "
+      f".. controls ({cx-rx:.1f},{y1+k:.1f}) and ({cx+rx:.1f},{y1+k:.1f}) .. ({cx+rx:.1f},{y1:.1f}) "
+      f"-- ({cx+rx:.1f},{y0:.1f}) -- cycle;")
+    w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
+      f"({cx:.1f},{y0:.1f}) ellipse ({rx:.1f} and {ry:.1f});")
+    node(cx, (y0 + y1) / 2 + 6, text, 8.3, stroke)
 
 
-def banner(x0, y0, x1, y1, text, fill, color, fs=9.0):
-    w(f"\\draw[draw={color},line width=0.8pt,fill={fill},rounded corners=9/72cm] "
+def card3d(x0, x1, ytop, ybot, dx, dy, title, body, stroke, side):
+    w(f"\\fill[fill=white,draw={stroke},line width={LW}pt] "
+      f"({x0:.1f},{ytop:.1f}) -- ({x0+dx:.1f},{ytop-dy:.1f}) -- ({x1+dx:.1f},{ytop-dy:.1f}) -- "
+      f"({x1:.1f},{ytop:.1f}) -- cycle;")
+    w(f"\\fill[fill={side},draw={stroke},line width={LW}pt] "
+      f"({x1:.1f},{ytop:.1f}) -- ({x1+dx:.1f},{ytop-dy:.1f}) -- ({x1+dx:.1f},{ybot-dy:.1f}) -- "
+      f"({x1:.1f},{ybot:.1f}) -- cycle;")
+    w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
+      f"({x0:.1f},{ytop:.1f}) rectangle ({x1:.1f},{ybot:.1f});")
+    node((x0 + x1) / 2 + dx / 2, ytop - dy / 2, title, 8.8, stroke, True)
+    n = len(body)
+    for i, line in enumerate(body):
+        y = (ytop + ybot) / 2 + 4 + (i - (n - 1) / 2) * 26
+        node((x0 + x1) / 2, y, line, 7.6, "black")
+
+
+def pill(x0, y0, x1, y1, text, fill, stroke):
+    w(f"\\draw[fill={fill},draw={stroke},line width={LW}pt,"
+      f"rounded corners={(y1-y0)/2/72:.4f}cm] "
       f"({x0:.1f},{y0:.1f}) rectangle ({x1:.1f},{y1:.1f});")
-    node((x0 + x1) / 2, (y0 + y1) / 2, text, fs, color, True)
+    node((x0 + x1) / 2, (y0 + y1) / 2, text, 8.8, stroke, True)
+
+
+def vtext(cx, y0, y1, text, color, fs=8.3):
+    n = len(text)
+    pitch = min((y1 - y0 - 20) / n, 44)
+    yf = y0 + ((y1 - y0) - (n - 1) * pitch) / 2
+    for i, ch in enumerate(text):
+        node(cx, yf + pitch * i, ch, fs, color)
+
+
+def line(x0, y0, x1, y1, stroke):
+    w(f"\\draw[line width={LW}pt,draw={stroke}] ({x0:.1f},{y0:.1f}) -- ({x1:.1f},{y1:.1f});")
+
+
+def dbl_arrow(cy, x0, x1, stroke):
+    h, s = 21, 7
+    w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
+      f"({x0+11:.1f},{cy-s:.1f}) -- ({x1-11:.1f},{cy-s:.1f}) -- ({x1-11:.1f},{cy-h:.1f}) -- "
+      f"({x1:.1f},{cy:.1f}) -- ({x1-11:.1f},{cy+h:.1f}) -- ({x1-11:.1f},{cy+s:.1f}) -- "
+      f"({x0+11:.1f},{cy+s:.1f}) -- ({x0+11:.1f},{cy+h:.1f}) -- ({x0:.1f},{cy:.1f}) -- "
+      f"({x0+11:.1f},{cy-h:.1f}) -- cycle;")
 
 
 # ---------------- 内容 ----------------
-PROBLEM = "城市内涝：降雨看不准、积水算不出、预警发不快、处置不联动"
+CYL = ["雨量遥测库", "管网拓扑库", "历史内涝库", "预案知识库"]
+CARD_T = "多源数据融合与样本构建"
+CARD_B = ["时钟对齐 · 缺测修复 · 汇水单元编码", "特征构建 · 样本分层 · 训练验证切分"]
+MODULES = [("模型输入", "边界与初始场"), ("参数标定", "糙率 · 坡度 · 管径")]
+BRANCH = ["一维管网水力", "二维地表漫流", "耦合求解调度", "残差智能订正"]
+CHILD = ["短信与 App 推送", "泵站联合调度", "交通诱导联动", "抢险资源调度"]
 OUTCOME = "支撑「监测—推演—预警—处置」闭环的城市内涝实时防控"
 
-LANES = [
-    ("感知层", "多源观测", [
-        ("雨量站网", "分钟级 · 全网 32 站"),
-        ("水位流量计", "关键节点 18 处"),
-        ("视频积水识别", "路桥隧道 24 路"),
-        ("雷达降雨外推", "6 分钟滚动"),
-        ("管网工况信号", "泵站 12 座"),
-        ("工单与舆情", "辅助核验"),
-    ]),
-    ("数据层", "清洗与建库", [
-        ("时钟对齐", "统一到 1 分钟"),
-        ("缺测异常修复", "规则 + 插值"),
-        ("汇水单元编码", "划分为 46 个单元"),
-        ("内涝样本库", "近 5 年 137 场"),
-        ("特征构建", "雨强·坡度·管径"),
-        ("训练验证切分", "时空分层抽样"),
-    ]),
-    ("模型层", "推演与预报", [
-        ("管网水动力模型", "一维 Saint-Venant"),
-        ("地表漫流耦合", "二维浅水方程"),
-        ("深度学习订正", "LSTM 残差修正"),
-        ("积水深度预报", "1h / 3h 滚动"),
-        ("不确定性区间", "分位数回归"),
-        ("阈值标定", "四级预警线"),
-    ]),
-    ("服务层", "预警与联动", [
-        ("分级预警发布", "短信 · App · 大屏"),
-        ("泵站联合调度", "规则 + 优化"),
-        ("交通诱导联动", "可变情报板"),
-        ("抢险资源调度", "队伍与设备"),
-        ("处置效果回流", "工单闭环"),
-        ("预案自学习", "季度迭代"),
-    ]),
-]
-
 # ---------------- 几何（栅格单位，1 单位 = 1/72cm）----------------
-X0 = 40
-LANE_W, GAP = 240, 40
-HEAD_Y0, HEAD_Y1 = 84, 140
-NODE_W, NODE_H, NODE_GAP = 190, 56, 16
-FIRST_Y = 156
-LANES_BOT = FIRST_Y + 6 * NODE_H + 5 * NODE_GAP + 18
-MERGE_Y = LANES_BOT + 26
-BAR_Y0, BAR_Y1 = MERGE_Y + 22, MERGE_Y + 54
-TOP_Y0, TOP_Y1 = 16, 62
+CX0, CX1 = 40, 960
+LB0, LB1 = 54, 112
+B0, B1 = 168, 946
+MID = (B0 + B1) / 2                      # 557
+
+C1 = (40, 430)
+C2 = (470, 1010)
+C3 = (1050, 1340)
+C4 = (1374, 1442)
 
 
-def lane_x(i):
-    return X0 + i * (LANE_W + GAP)
+def draw(ts):
+    t1, t2, t3 = ts
+    L1, H1, T1, S1 = t1["line"], t1["hdr"], t1["hdrT"], t1["side"]
+    L2, H2, T2, S2 = t2["line"], t2["hdr"], t2["hdrT"], t2["side"]
+    L3, H3, T3, S3 = t3["line"], t3["hdr"], t3["hdrT"], t3["side"]
 
+    # ===== 1. 数据治理 =====
+    dashed(CX0, C1[0], CX1, C1[1], L1)
+    label_box(LB0, C1[0] + 14, LB1, C1[1] - 14, "数据治理", L1)
+    cxs = [257, 457, 657, 857]
+    for cx, name in zip(cxs, CYL):
+        cylinder(cx, 70, 158, 89, 9, name, L1)
+    line(cxs[0], 190, cxs[-1], 190, L1)
+    for cx in cxs:
+        line(cx, 167, cx, 190, L1)
+    line(578, 190, 578, 226, L1)
+    card3d(257, 857, 268, 378, 42, 42, CARD_T, CARD_B, L1, S1)
 
-def node_y(j):
-    return FIRST_Y + j * (NODE_H + NODE_GAP)
+    # ===== 2. 模型推演 =====
+    dashed(CX0, C2[0], CX1, C2[1], L2)
+    label_box(LB0, C2[0] + 14, LB1, C2[1] - 14, "模型推演", L2)
+    mod_cy = []
+    for i, (m, note) in enumerate(MODULES):
+        y0 = 566 + i * 150
+        rect(180, y0, 330, y0 + 96, 12, "white", L2)
+        two(255, y0 + 48, m, note, 8.3, 6.4, L2, 1.2)
+        mod_cy.append(y0 + 48)
+    w(f"\\draw[line width={LW}pt,draw={L2},-{{Latex[length=1.4mm,width=1.0mm]}}] "
+      f"(255,{mod_cy[0]+48:.1f}) -- (255,{mod_cy[1]-48:.1f});")
+    br_cy = []
+    for i, b in enumerate(BRANCH):
+        y0 = 540 + i * 78
+        rect(390, y0, 650, y0 + 56, 10, "white", L2)
+        node(520, y0 + 28, b, 8.3, L2)
+        br_cy.append(y0 + 28)
+    for cy_m, idx in [(mod_cy[0], (0, 1)), (mod_cy[1], (2, 3))]:
+        line(330, cy_m, 358, cy_m, L2)
+        line(358, br_cy[idx[0]], 358, br_cy[idx[1]], L2)
+        for i in idx:
+            line(358, br_cy[i], 390, br_cy[i], L2)
+    for y in br_cy:
+        line(650, y, 676, y, L2)
+    line(676, br_cy[0], 676, br_cy[-1], L2)
+    line(676, 685, 700, 685, L2)
+    rect(700, 540, 830, 830, 12, "white", L2)
+    two(765, 685, "内涝预报", "核心模型", 8.8, 7.0, L2, 1.4)
+    dbl_arrow(685, 836, 872, L2)
+    rect(878, 540, 946, 830, 12, "white", L2)
+    vtext(912, 600, 770, "积水深度预警", L2, 8.3)
 
+    varrow(MID, 434, 466, L2)
+    varrow(MID, 1014, 1046, L3)
 
-def draw(colors, mono):
-    """colors = [(deep, light)] * 4"""
-    banner(X0, TOP_Y0, lane_x(3) + LANE_W, TOP_Y1, PROBLEM, "monoHead", "black", 8.8)
+    # ===== 3. 预警联动 =====
+    dashed(CX0, C3[0], CX1, C3[1], L3)
+    label_box(LB0, C3[0] + 14, LB1, C3[1] - 14, "预警联动", L3)
+    pill(300, 1028, 700, 1078, "风险研判与分级预警", H3, L3)
+    rect(300, 1092, 700, 1162, 10, "white", L3)
+    node(500, 1127, "内涝风险实时研判", 8.6, L3, True)
+    kids = [208, 388, 568, 748]
+    line(500, 1162, 500, 1200, L3)
+    line(kids[0] + 80, 1200, kids[-1] + 80, 1200, L3)
+    for k, txt in zip(kids, CHILD):
+        line(k + 80, 1200, k + 80, 1232, L3)
+        rect(k, 1232, k + 160, 1304, 10, "white", L3)
+        node(k + 80, 1268, txt, 8.0, L3)
+    varrow(500, 1344, 1370, L3, 30, 64, 14)
 
-    for i, (name, sub, items) in enumerate(LANES):
-        deep, light = colors[i]
-        tcol = "black" if deep in ("monoLine", "grayDeep") else deep
-        lx, rx = lane_x(i), lane_x(i) + LANE_W
-        w(f"\\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw={deep}] "
-          f"({lx:.1f},{HEAD_Y0:.1f}) rectangle ({rx:.1f},{LANES_BOT:.1f});")
-        w(f"\\draw[draw={deep},line width=0.8pt,fill={light}] "
-          f"({lx:.1f},{HEAD_Y0:.1f}) rectangle ({rx:.1f},{HEAD_Y1:.1f});")
-        two((lx + rx) / 2, (HEAD_Y0 + HEAD_Y1) / 2, name, sub, 9.4, 7.0, tcol, 2.0)
-        cx = (lx + rx) / 2
-        for j, (title, note) in enumerate(items):
-            ny = node_y(j)
-            stage(cx - NODE_W / 2, ny, cx + NODE_W / 2, ny + NODE_H, title, note, deep, tcol)
-            if j < 5:
-                arrow_down(cx, ny + NODE_H, ny + NODE_H + NODE_GAP, deep)
-        if i < 3:
-            arrow_right(HEAD_Y0 + 18, rx + 6, rx + GAP - 6, deep)
-
-    # 汇合线 + 成果横幅
-    centers = [lane_x(i) + LANE_W / 2 for i in range(4)]
-    last_bottom = node_y(5) + NODE_H
-    for i, cx in enumerate(centers):
-        line(cx, last_bottom, cx, MERGE_Y, colors[i][0])
-    line(centers[0], MERGE_Y, centers[3], MERGE_Y, colors[1][0])
-    mid = (centers[0] + centers[3]) / 2
-    arrow_down(mid, MERGE_Y, BAR_Y0, colors[1][0], 1.6)
-    banner(X0, BAR_Y0, lane_x(3) + LANE_W, BAR_Y1, OUTCOME,
-           "monoHead" if mono else colors[1][0],
-           "black" if mono else "white", 9.0)
+    # ===== 4. 结论条 =====
+    rect(CX0, C4[0], CX1, C4[1], 8, t2["bar"], t2["line"], 0.8)
+    node((CX0 + CX1) / 2, (C4[0] + C4[1]) / 2, OUTCOME, 9.2, t2["barT"], True)
 
 
 # ---------------- 两版 ----------------
 w(r"\begin{tikzpicture}[x=0.0138889cm,y=-0.0138889cm]")
-draw([("monoLine", "monoHead")] * 4, True)
+draw([{"line": "monoLine", "hdr": "monoHead", "hdrT": "black", "side": "monoSide",
+       "bar": "monoHead", "barT": "black"}] * 3)
 w(r"\end{tikzpicture}")
 MONO = OUT[:]
 OUT.clear()
 
 w(r"\begin{tikzpicture}[x=0.0138889cm,y=-0.0138889cm]")
-draw([("tealDeep", "tealLight"), ("navyDeep", "navyLight"),
-      ("warmDeep", "warmLight"), ("grayDeep", "grayLight")], False)
+draw([{"line": "tealDeep", "hdr": "tealLight", "hdrT": "tealDeep", "side": "tealSide",
+       "bar": "tealDeep", "barT": "white"},
+      {"line": "navyDeep", "hdr": "navyLight", "hdrT": "navyDeep", "side": "navySide",
+       "bar": "navyDeep", "barT": "white"},
+      {"line": "warmDeep", "hdr": "warmLight", "hdrT": "warmDeep", "side": "warmSide",
+       "bar": "warmDeep", "barT": "white"}])
 w(r"\end{tikzpicture}")
 COLOR = OUT[:]
 
 HEAD = r"""% !TEX program = xelatex
-% 城市内涝实时预警系统 —— 泳道式技术路线（单色 / 彩色两版）
+% 城市内涝实时预警系统 —— 多图元组合（单色 / 彩色两版）
 \documentclass[10pt]{article}
-\usepackage[a4paper,margin=1.6cm]{geometry}
+\usepackage[a4paper,margin=1.5cm]{geometry}
 \usepackage{xeCJK}
 \setCJKmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]
 \setmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]
@@ -174,46 +245,49 @@ HEAD = r"""% !TEX program = xelatex
 \usetikzlibrary{arrows.meta}
 \definecolor{monoLine}{HTML}{4D4D4D}
 \definecolor{monoHead}{HTML}{D9D9D9}
+\definecolor{monoSide}{HTML}{CBCBCB}
 \definecolor{navyDeep}{HTML}{2A4370}
 \definecolor{navyLight}{HTML}{D6E0EE}
+\definecolor{navySide}{HTML}{B9CBE2}
 \definecolor{tealDeep}{HTML}{2C736E}
 \definecolor{tealLight}{HTML}{D3E7E4}
+\definecolor{tealSide}{HTML}{B7D8D5}
 \definecolor{warmDeep}{HTML}{B0702F}
 \definecolor{warmLight}{HTML}{F4E6D4}
-\definecolor{grayDeep}{HTML}{8A8A8A}
-\definecolor{grayLight}{HTML}{EFEFEF}
+\definecolor{warmSide}{HTML}{E3C7A4}
 \setlength{\parindent}{0pt}
 \pagestyle{empty}
 \begin{document}
 
 \begin{center}
 {\large\bfseries 城市内涝实时预警系统技术路线}\\[1pt]
-{\footnotesize 同一份几何，两种配色：四条泳道，每道六个环节}
+{\footnotesize 同一份几何，两种配色}
 \end{center}
 
-\vspace{1pt}
-{\footnotesize\textbf{(a) 单色版}　黑白印刷稿用；层级由灰阶、字号与虚线分组表达。}
+\vspace{0pt}
+{\footnotesize\textbf{(a) 单色版}　黑白印刷稿用。}
 
-\vspace{1pt}
+\vspace{0pt}
 \begin{center}
 """
 MID = r"""
 \end{center}
 
-\vspace{5pt}
-{\footnotesize\textbf{(b) 彩色版}　同一套几何，仅替换配色：每条泳道一种色系，浅色作标题底、深色作描边与文字，道内连线跟随本道颜色。}
+\newpage
 
-\vspace{1pt}
+\vspace{2pt}
+{\footnotesize\textbf{(b) 彩色版}　同一套几何，仅替换配色：容器描边、圆柱、立体卡片、胶囊与结论条统一取主色系深浅两档。}
+
+\vspace{0pt}
 \begin{center}
 """
 TAIL = r"""
 \end{center}
 
-\vspace{3pt}
+\vspace{0pt}
 {\footnotesize
-\textbf{图例}　虚线框 = 泳道边界；竖向箭头 = 道内工序；横向箭头 = 泳道推进；底部横线 = 成果汇合。\\[2pt]
-\textbf{两版仅有颜色差异}　几何、字号、间距、线宽完全一致：标题条 \texttt{\#D9D9D9} → 本泳道浅档；
-框线 \texttt{\#4D4D4D} → 本泳道深档；成果条 \texttt{\#D9D9D9}+黑字 → 主色深档+白字。
+\textbf{图元}　数据库圆柱 ×4；立体折角卡片（顶面放标题、右侧面填灰）；胶囊标题；
+分层虚线容器 + 左侧竖排标签 + 内嵌右向块箭头；层间空心块箭头；双向箭头；1→4 树形支架；结论条。
 }
 
 \end{document}
