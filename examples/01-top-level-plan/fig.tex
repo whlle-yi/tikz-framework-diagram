@@ -1,0 +1,170 @@
+% !TEX program = xelatex
+% 工业大模型落地总体顶层规划 —— TikZ 矢量复刻
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft YaHei}
+\setmainfont{Microsoft YaHei}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+
+% 竖排文字（字符自上而下）
+\newcommand{\vA}[1]{{\fontsize{9.5}{15.5}\selectfont\shortstack{#1}}}% 6字竖排
+\newcommand{\vB}[1]{{\fontsize{9.5}{14}\selectfont\shortstack{#1}}}% 4字竖排
+\newcommand{\vC}[1]{{\fontsize{9.5}{11.6}\selectfont\shortstack{#1}}}% 5字竖排（窄框）
+
+\begin{document}
+\begin{tikzpicture}[
+  x=1cm,y=1cm,
+  box/.style={draw,line width=0.7pt,inner sep=0pt,outer sep=0pt,align=center,
+              font=\fontsize{9.5}{11}\selectfont},
+  ttl/.style={box,font=\fontsize{12}{14}\selectfont},
+  fin/.style={box,font=\fontsize{11}{13}\selectfont},
+  hdr/.style={box,font=\fontsize{9.4}{11}\selectfont},
+  cont/.style={draw,line width=0.7pt,dash pattern=on 1.8pt off 1.3pt},
+  ln/.style={line width=0.7pt},
+  arr/.style={-{Latex[length=1.9mm,width=1.4mm]},line width=0.7pt},
+  sarr/.style={-{Latex[length=1.55mm,width=1.15mm]},line width=0.7pt},
+]
+
+%=================== 顶部标题 ===================
+\node[ttl,minimum width=11.0cm,minimum height=0.625cm] at (5.50,-0.3125)
+  {工业大模型落地总体顶层规划};
+
+%=================== 第一层：定位与目标 ===================
+\draw[cont] (0,-0.778) rectangle (11.0,-1.736);
+\node[box,minimum width=5.11cm,minimum height=0.639cm] at (2.805,-1.2365) {业务场景定位梳理};
+\node[box,minimum width=5.06cm,minimum height=0.639cm] at (8.280,-1.2365) {合规安全总体目标设定};
+
+% 空心下箭头 1
+\draw[ln,fill=white]
+  (5.39,-1.736) -- (5.71,-1.736) -- (5.71,-2.038) -- (5.875,-2.038)
+  -- (5.55,-2.278) -- (5.225,-2.038) -- (5.39,-2.038) -- cycle;
+
+%=================== 第二层：业务与安全拆解 ===================
+\draw[cont] (0,-2.500) rectangle (11.0,-6.278);
+\node[box,minimum width=0.79cm,minimum height=3.597cm] at (0.935,-4.4655)
+  {\vA{行\\业\\业\\务\\拆\\解}};
+\node[box,minimum width=0.81cm,minimum height=3.597cm] at (10.155,-4.4655)
+  {\vA{安\\全\\管\\控\\拆\\解}};
+
+\foreach \yy/\t in {-3.1595/工艺流程梳理, -4.0115/设备机理分析,
+                    -4.8635/专业术语归集, -5.7155/行业标准整理}{%
+  \node[box,minimum width=3.05cm,minimum height=0.625cm] at (3.535,\yy) {\t};}
+\foreach \yy/\t in {-3.1595/法规条款梳理, -4.0115/监管要求匹配,
+                    -4.8635/生产准则梳理, -5.7155/安全规程适配}{%
+  \node[box,minimum width=3.06cm,minimum height=0.625cm] at (7.610,\yy) {\t};}
+
+% 左侧树形连线
+\draw[ln] (1.330,-4.4375) -- (1.670,-4.4375);
+\draw[ln] (1.670,-3.1595) -- (1.670,-5.7155);
+\foreach \yy in {-3.1595,-4.0115,-4.8635,-5.7155}{%
+  \draw[ln] (1.670,\yy) -- (2.010,\yy);}
+% 右侧树形连线
+\foreach \yy in {-3.1595,-4.0115,-4.8635,-5.7155}{%
+  \draw[ln] (9.140,\yy) -- (9.440,\yy);}
+\draw[ln] (9.440,-3.1595) -- (9.440,-5.7155);
+\draw[ln] (9.440,-4.4375) -- (9.750,-4.4375);
+
+% 空心下箭头 2
+\draw[ln,fill=white]
+  (5.39,-6.278) -- (5.71,-6.278) -- (5.71,-6.583) -- (5.875,-6.583)
+  -- (5.55,-6.833) -- (5.225,-6.583) -- (5.39,-6.583) -- cycle;
+
+%=================== 第三层：数据治理与知识构建 ===================
+\draw[cont] (0,-7.111) rectangle (11.0,-10.694);
+\node[hdr,minimum width=5.93cm,minimum height=0.625cm] at (5.575,-7.6185)
+  {工业数据治理与行业知识构建};
+
+% 五个竖排流程框
+\node[box,minimum width=0.71cm,minimum height=2.333cm] at (0.895,-9.2915)
+  {\vC{多\\源\\采\\数\\据}};
+\node[box,minimum width=0.71cm,minimum height=2.333cm] at (1.945,-9.2915)
+  {\vC{数\\据\\预\\处\\理}};
+\node[box,minimum width=0.71cm,minimum height=2.333cm] at (2.995,-9.2915)
+  {\vB{工\\业\\知\\识}};
+\node[box,minimum width=0.71cm,minimum height=2.333cm] at (9.175,-9.2915)
+  {\vC{可\\信\\约\\束\\设}};
+\node[box,minimum width=0.71cm,minimum height=2.333cm] at (10.205,-9.2915)
+  {\vC{决\\策\\可\\追\\溯}};
+
+% 左表：工业知识（4行）
+\draw[box] (3.35,-8.125) rectangle (5.30,-10.458);
+\foreach \yy/\t in {-8.4165/知识分类, -9.0000/实体提取,
+                    -9.5830/关系标注, -10.1665/规则入库}{%
+  \node[font=\fontsize{9.5}{11}\selectfont] at (4.325,\yy) {\t};}
+\foreach \yy in {-8.7083,-9.2917,-9.8750}{%
+  \draw[ln] (3.35,\yy) -- (5.30,\yy);}
+
+% 右表：行业知识（3行）
+\node[box,minimum width=0.58cm,minimum height=2.333cm] at (5.93,-9.2915)
+  {\vB{行\\业\\知\\识}};
+\draw[box] (6.22,-8.125) rectangle (8.46,-10.458);
+\foreach \yy/\t in {-8.5140/基座选型, -9.2915/领域微调, -10.0690/大小模型}{%
+  \node[font=\fontsize{9.5}{11}\selectfont] at (7.34,\yy) {\t};}
+\foreach \yy in {-8.9028,-9.6805}{%
+  \draw[ln] (6.22,\yy) -- (8.46,\yy);}
+
+% 横向流程箭头
+\foreach \xa/\xb in {1.25/1.59, 2.30/2.64, 5.30/5.64, 8.46/8.82, 9.53/9.85}{%
+  \draw[sarr] (\xa,-9.2915) -- (\xb,-9.2915);}
+
+% 空心下箭头 3
+\draw[ln,fill=white]
+  (5.39,-10.875) -- (5.71,-10.875) -- (5.71,-11.180) -- (5.875,-11.180)
+  -- (5.55,-11.417) -- (5.225,-11.180) -- (5.39,-11.180) -- cycle;
+
+%=================== 第四层：开发与部署 ===================
+\draw[cont] (0,-11.736) rectangle (11.0,-17.250);
+\node[hdr,minimum width=5.92cm,minimum height=0.625cm] at (5.575,-12.2985)
+  {大模型定制化开发与可信落地部署};
+
+% 分流母线
+\draw[ln] (5.575,-12.611) -- (5.575,-12.931);
+\draw[ln] (1.735,-12.931) -- (9.375,-12.931);
+\foreach \xc in {1.735,4.265,6.815,9.375}{%
+  \draw[arr] (\xc,-12.931) -- (\xc,-13.250);}
+
+\foreach \xc/\t in {1.735/能力迭代, 4.265/机制搭建, 6.815/内嵌风控, 9.375/协同设计}{%
+  \node[box,minimum width=2.39cm,minimum height=0.625cm] at (\xc,-13.5625) {\t};}
+
+% 三组虚线框 + 组内方框
+\foreach \xa/\xb in {0.25/3.08, 4.10/6.94, 7.96/10.81}{%
+  \draw[cont] (\xa,-14.250) rectangle (\xb,-17.042);}
+\foreach \xa/\xb in {0.47/2.86, 4.33/6.71, 8.18/10.57}{%
+  \foreach \yy in {-14.7625,-15.6460,-16.5295}{%
+    \draw[box] (\xa,{\yy-0.3125}) rectangle (\xb,{\yy+0.3125});}}
+\foreach \xa/\xb/\yy/\t in {%
+  0.47/2.86/-14.7625/模型训练, 0.47/2.86/-15.6460/领域训练, 0.47/2.86/-16.5295/能力优化,
+  4.33/6.71/-14.7625/校验封装, 4.33/6.71/-15.6460/过程管控, 4.33/6.71/-16.5295/溯源审计,
+  8.18/10.57/-14.7625/线试运行, 8.18/10.57/-15.6460/应用落地, 8.18/10.57/-16.5295/迭代优化}{%
+  \node[font=\fontsize{9.5}{11}\selectfont] at ({(\xa+\xb)/2},\yy) {\t};}
+
+% 组间空心右箭头
+\foreach \xa/\xb in {3.18/4.00, 7.04/7.86}{%
+  \pgfmathsetmacro{\xh}{\xb-0.24}%
+  \draw[ln,fill=white]
+    (\xa,-15.736) -- (\xh,-15.736) -- (\xh,-15.856) -- (\xb,-15.646)
+    -- (\xh,-15.436) -- (\xh,-15.556) -- (\xa,-15.556) -- cycle;}
+
+% 空心下箭头 4
+\draw[ln,fill=white]
+  (5.39,-17.350) -- (5.71,-17.350) -- (5.71,-17.650) -- (5.875,-17.650)
+  -- (5.55,-17.890) -- (5.225,-17.650) -- (5.39,-17.650) -- cycle;
+
+%=================== 结论 ===================
+\node[fin,minimum width=5.77cm,minimum height=0.625cm] at (5.575,-18.3405)
+  {工业大模型三性协同落地成效总结};
+
+%=================== 左侧三段纵向大箭头 ===================
+% #1 顶尖 y   #2 箭尖 y   #3 文字
+\newcommand{\bigarrow}[3]{%
+  \draw[ln,fill=white]
+    (-1.1665,#1) -- (-0.5565,#1) -- (-0.5565,{#2+0.806}) -- (-0.2500,{#2+0.806})
+    -- (-0.8615,#2) -- (-1.4730,{#2+0.806}) -- (-1.1665,{#2+0.806}) -- cycle;%
+  \node[align=center] at (-0.8615,{(#1+#2+0.806)/2}) {#3};}
+\bigarrow{-0.889}{-5.514}{\vA{专\\业\\性\\构\\建}}
+\bigarrow{-6.653}{-11.306}{\vA{可\\控\\性\\搭\\建}}
+\bigarrow{-12.542}{-17.194}{\vA{安\\全\\性\\落\\地}}
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,156 @@
+% !TEX program = xelatex
+% 研究框架图 —— TikZ 矢量复刻（水印已去除）
+% 坐标系：x=1/72cm, y=-1/72cm，即直接使用原图像素坐标（1px = 1/72 cm）
+% 纵向 y 取负值，图像向下为正
+\documentclass[tikz,border=6pt]{standalone}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft YaHei}
+\setmainfont{Microsoft YaHei}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
+\xeCJKsetup{CJKecglue={}}
+\definecolor{cbox}{HTML}{FFFFFF}
+\definecolor{ccol}{HTML}{F2F2F2}
+\definecolor{chdr}{HTML}{D9D9D9}
+\definecolor{ctop}{HTML}{BFBFBF}
+\definecolor{cline}{HTML}{4D4D4D}
+\begin{document}
+\begin{tikzpicture}[x=0.0138889cm,y=-0.0138889cm,
+  box/.style={draw=cline,inner sep=1pt,outer sep=0pt,align=center,
+              execute at begin node={\setlength{\baselineskip}{9.2pt}}}]
+\node[box,fill=ctop,line width=0.55pt,minimum width=1.9167cm,minimum height=0.6250cm,font=\fontsize{7.0}{8.96}\selectfont] at (212.0,74.5) {\bfseries 研究步骤};
+\node[box,fill=ctop,line width=0.55pt,minimum width=8.5833cm,minimum height=0.6250cm,font=\fontsize{7.0}{8.96}\selectfont] at (611.0,74.5) {\bfseries XXXXXX对XXXXXX恢复性效应的影响研究};
+\node[box,fill=ctop,line width=0.55pt,minimum width=1.9306cm,minimum height=0.6250cm,font=\fontsize{7.0}{8.96}\selectfont] at (1010.5,74.5) {\bfseries 研究方法};
+\draw[draw=cline,line width=0.8pt] (143.0,97.0) -- (1080.0,97.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (142.0,120.0) rectangle (281.0,1400.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (302.0,120.0) rectangle (919.0,1400.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (941.0,120.0) rectangle (1079.0,1400.0);
+\draw[draw=cline,line width=0.55pt] (281.0,75.0) -- (302.0,75.0);
+\draw[draw=cline,line width=0.55pt] (920.0,75.0) -- (941.0,75.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (212.0,97.0) -- (212.0,137.0);
+\draw[draw=cline,line width=0.55pt] (1010.0,97.0) -- (1010.0,235.0);
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.3056cm,minimum height=3.4167cm,font=\fontsize{6.9}{8.83}\selectfont] at (212.0,260.0) {\bfseries 提出\\问题};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.3056cm,minimum height=3.2917cm,font=\fontsize{6.9}{8.83}\selectfont] at (212.0,558.5) {\bfseries 研究样\\点选择\\与实地\\测量};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.3056cm,minimum height=3.3056cm,font=\fontsize{6.9}{8.83}\selectfont] at (212.0,832.0) {\bfseries 问卷设\\计和主\\观数据\\收集};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.3056cm,minimum height=2.5972cm,font=\fontsize{6.9}{8.83}\selectfont] at (212.0,1077.5) {\bfseries 生理指\\标数据\\收集};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.3056cm,minimum height=2.3889cm,font=\fontsize{6.9}{8.83}\selectfont] at (212.0,1301.0) {\bfseries 提出优\\化设计\\策略};
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (212.0,383.0) -- (212.0,440.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (212.0,677.0) -- (212.0,713.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (212.0,951.0) -- (212.0,984.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (212.0,1171.0) -- (212.0,1215.0);
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.6389cm,minimum height=0.6667cm,font=\fontsize{6.9}{8.83}\selectfont] at (1010.0,259.0) {\bfseries 文献研究法};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.6389cm,minimum height=0.6667cm,font=\fontsize{6.9}{8.83}\selectfont] at (1010.0,558.0) {\bfseries 实地调研法};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.6389cm,minimum height=0.6667cm,font=\fontsize{6.9}{8.83}\selectfont] at (1010.0,831.0) {\bfseries 问卷调查法};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.6389cm,minimum height=0.6667cm,font=\fontsize{6.9}{8.83}\selectfont] at (1010.0,1077.0) {\bfseries 数据分析法};
+\node[box,fill=ccol,line width=0.55pt,minimum width=1.6389cm,minimum height=0.6806cm,font=\fontsize{6.9}{8.83}\selectfont] at (1010.0,1302.5) {\bfseries 归纳总结法};
+\draw[draw=cline,line width=0.55pt] (1010.0,283.0) -- (1010.0,534.0);
+\draw[draw=cline,line width=0.55pt] (1010.0,582.0) -- (1010.0,807.0);
+\draw[draw=cline,line width=0.55pt] (1010.0,855.0) -- (1010.0,1053.0);
+\draw[draw=cline,line width=0.55pt] (1010.0,1101.0) -- (1010.0,1278.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (909.0,259.0) -- (951.0,259.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (909.0,558.0) -- (951.0,558.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (909.0,831.0) -- (951.0,831.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (909.0,1077.0) -- (951.0,1077.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (909.0,1302.5) -- (951.0,1302.5);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (313.0,120.0) rectangle (909.0,398.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (313.0,425.0) rectangle (909.0,690.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (313.0,710.0) rectangle (909.0,946.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (313.0,984.0) rectangle (909.0,1180.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,draw=cline,line width=0.7pt] (313.0,1203.0) rectangle (909.0,1401.0);
+\draw[fill=white,draw=cline,line width=0.7pt] (598.0,400.0) -- (624.0,400.0) -- (624.0,413.0) -- (638.5,413.0) -- (611.0,425.0) -- (583.5,413.0) -- (598.0,413.0) -- cycle;
+\draw[fill=white,draw=cline,line width=0.7pt] (598.0,691.0) -- (624.0,691.0) -- (624.0,700.0) -- (638.5,700.0) -- (611.0,712.0) -- (583.5,700.0) -- (598.0,700.0) -- cycle;
+\draw[fill=white,draw=cline,line width=0.7pt] (598.0,951.0) -- (624.0,951.0) -- (624.0,962.0) -- (638.5,962.0) -- (611.0,974.0) -- (583.5,962.0) -- (598.0,962.0) -- cycle;
+\draw[fill=white,draw=cline,line width=0.7pt] (598.0,1181.0) -- (624.0,1181.0) -- (624.0,1191.0) -- (638.5,1191.0) -- (611.0,1203.0) -- (583.5,1191.0) -- (598.0,1191.0) -- cycle;
+\node[box,fill=chdr,line width=0.55pt,minimum width=8.2500cm,minimum height=0.6389cm,font=\fontsize{6.7}{8.58}\selectfont] at (611.0,149.0) {\bfseries 本项目研究的意义及在国内外的研究现状与存在的问题};
+\draw[draw=cline,line width=0.55pt] (611.0,172.0) -- (611.0,187.0);
+\draw[draw=cline,line width=0.55pt] (370.0,187.0) -- (852.0,187.0);
+\draw[draw=cline,line width=0.55pt] (370.0,187.0) -- (370.0,204.0);
+\draw[draw=cline,line width=0.55pt] (491.0,187.0) -- (491.0,204.0);
+\draw[draw=cline,line width=0.55pt] (611.0,187.0) -- (611.0,204.0);
+\draw[draw=cline,line width=0.55pt] (732.0,187.0) -- (732.0,204.0);
+\draw[draw=cline,line width=0.55pt] (852.0,187.0) -- (852.0,204.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.5833cm,minimum height=0.8750cm,font=\fontsize{6.7}{8.58}\selectfont] at (370.0,235.5) {研究背景};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.5833cm,minimum height=0.8750cm,font=\fontsize{6.7}{8.58}\selectfont] at (491.0,235.5) {研究意义};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.5833cm,minimum height=0.8750cm,font=\fontsize{6.7}{8.58}\selectfont] at (611.0,235.5) {相关概念};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.5833cm,minimum height=0.8750cm,font=\fontsize{6.7}{8.58}\selectfont] at (731.0,235.5) {国内外研究\\进展};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.5833cm,minimum height=0.8750cm,font=\fontsize{6.7}{8.58}\selectfont] at (852.0,235.5) {存在的问题};
+\draw[draw=cline,line width=0.55pt] (370.0,267.0) -- (370.0,279.0);
+\draw[draw=cline,line width=0.55pt] (491.0,267.0) -- (491.0,279.0);
+\draw[draw=cline,line width=0.55pt] (611.0,267.0) -- (611.0,279.0);
+\draw[draw=cline,line width=0.55pt] (732.0,267.0) -- (732.0,279.0);
+\draw[draw=cline,line width=0.55pt] (852.0,267.0) -- (852.0,279.0);
+\draw[draw=cline,line width=0.55pt] (371.0,279.0) -- (853.0,279.0);
+\draw[draw=cline,line width=0.55pt] (611.0,279.0) -- (611.0,299.0);
+\draw[draw=cline,line width=0.55pt] (385.0,299.0) -- (838.0,299.0);
+\draw[draw=cline,line width=0.55pt] (384.0,299.0) -- (384.0,312.0);
+\draw[draw=cline,line width=0.55pt] (535.0,299.0) -- (535.0,312.0);
+\draw[draw=cline,line width=0.55pt] (685.0,299.0) -- (685.0,312.0);
+\draw[draw=cline,line width=0.55pt] (837.0,299.0) -- (837.0,312.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.9861cm,minimum height=1.0694cm,font=\fontsize{6.7}{8.58}\selectfont] at (384.5,350.5) {城市扩张导致\\XXX问题严重};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.9722cm,minimum height=1.0694cm,font=\fontsize{6.7}{8.58}\selectfont] at (535.0,350.5) {XXXXXX问题\\影响多维感知};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.9861cm,minimum height=1.0694cm,font=\fontsize{6.7}{8.58}\selectfont] at (685.5,350.5) {XXX对城市绿\\地的健康需求};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.9861cm,minimum height=1.0694cm,font=\fontsize{6.7}{8.58}\selectfont] at (837.5,350.5) {XXX的恢复性\\效应仍需提升};
+\node[box,fill=chdr,line width=0.55pt,minimum width=8.2500cm,minimum height=0.6250cm,font=\fontsize{6.7}{8.58}\selectfont] at (611.0,462.5) {\bfseries XXXXXX对街旁绿地声视热环境感知的影响};
+\draw[draw=cline,line width=0.55pt] (611.0,485.0) -- (611.0,500.0);
+\draw[draw=cline,line width=0.55pt] (460.0,500.0) -- (761.0,500.0);
+\draw[draw=cline,line width=0.55pt] (460.0,500.0) -- (460.0,514.0);
+\draw[draw=cline,line width=0.55pt] (761.0,500.0) -- (761.0,514.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=4.0694cm,minimum height=0.5556cm,font=\fontsize{6.7}{8.58}\selectfont] at (460.5,534.0) {实地测量};
+\node[box,fill=cbox,line width=0.55pt,minimum width=4.0833cm,minimum height=0.5556cm,font=\fontsize{6.7}{8.58}\selectfont] at (761.0,534.0) {行为观察};
+\draw[draw=cline,line width=0.55pt] (460.0,554.0) -- (460.0,572.0);
+\draw[draw=cline,line width=0.55pt] (761.0,554.0) -- (761.0,572.0);
+\draw[draw=cline,line width=0.55pt] (363.0,572.0) -- (559.0,572.0);
+\draw[draw=cline,line width=0.55pt] (686.0,572.0) -- (839.0,572.0);
+\draw[draw=cline,line width=0.55pt] (363.0,572.0) -- (363.0,590.0);
+\draw[draw=cline,line width=0.55pt] (461.0,572.0) -- (461.0,590.0);
+\draw[draw=cline,line width=0.55pt] (559.0,572.0) -- (559.0,590.0);
+\draw[draw=cline,line width=0.55pt] (686.0,572.0) -- (686.0,590.0);
+\draw[draw=cline,line width=0.55pt] (839.0,572.0) -- (839.0,590.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.2500cm,minimum height=1.2083cm,font=\fontsize{6.7}{8.58}\selectfont] at (363.0,633.5) {噪声水\\平监测};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.2500cm,minimum height=1.2083cm,font=\fontsize{6.7}{8.58}\selectfont] at (461.0,633.5) {XXX参\\数测量};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.2361cm,minimum height=1.2083cm,font=\fontsize{6.7}{8.58}\selectfont] at (558.5,633.5) {视觉环\\境特征\\记录};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.9167cm,minimum height=1.2083cm,font=\fontsize{6.7}{8.58}\selectfont] at (685.0,633.5) {记录绿地使用\\行为};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.9167cm,minimum height=1.2083cm,font=\fontsize{6.7}{8.58}\selectfont] at (838.0,633.5) {记录\\XXXXXXXX分\\布};
+\node[box,fill=chdr,line width=0.55pt,minimum width=8.2500cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (611.0,744.0) {\bfseries XXXXXXXXX对街旁绿地恢复性效应的影响分析};
+\node[box,fill=cbox,line width=0.55pt,minimum width=0.7222cm,minimum height=2.1250cm,font=\fontsize{6.7}{8.58}\selectfont] at (344.0,858.5) {设\\计\\调\\查\\问\\卷};
+\draw[draw=cline,line width=0.55pt] (370.0,858.0) -- (383.0,858.0);
+\draw[draw=cline,line width=0.55pt] (383.0,803.0) -- (383.0,913.0);
+\draw[draw=cline,line width=0.55pt] (383.0,803.0) -- (395.0,803.0);
+\draw[draw=cline,line width=0.55pt] (383.0,858.0) -- (395.0,858.0);
+\draw[draw=cline,line width=0.55pt] (383.0,913.0) -- (395.0,913.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.5000cm,minimum height=0.6250cm,font=\fontsize{6.7}{8.58}\selectfont] at (521.0,804.5) {声、视、热环境感知评分};
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.5000cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (521.0,859.0) {恢复性环境量表};
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.5000cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (521.0,913.0) {人口统计学信息};
+\draw[draw=cline,line width=0.55pt] (647.0,803.0) -- (660.0,803.0);
+\draw[draw=cline,line width=0.55pt] (647.0,858.0) -- (660.0,858.0);
+\draw[draw=cline,line width=0.55pt] (647.0,913.0) -- (660.0,913.0);
+\draw[draw=cline,line width=0.55pt] (660.0,803.0) -- (660.0,913.0);
+\draw[draw=cline,line width=0.55pt] (660.0,858.0) -- (674.0,858.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.1111cm,minimum height=2.1250cm,font=\fontsize{6.7}{8.58}\selectfont] at (714.0,858.5) {实施问\\卷调查};
+\draw[draw=cline,line width=0.55pt] (754.0,858.0) -- (768.0,858.0);
+\draw[draw=cline,line width=0.55pt] (768.0,815.0) -- (768.0,901.0);
+\draw[draw=cline,line width=0.55pt] (768.0,815.0) -- (781.0,815.0);
+\draw[draw=cline,line width=0.55pt] (768.0,901.0) -- (781.0,901.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.7778cm,minimum height=0.9583cm,font=\fontsize{6.7}{8.58}\selectfont] at (845.0,815.5) {现场发放与\\回收问卷};
+\node[box,fill=cbox,line width=0.55pt,minimum width=1.7778cm,minimum height=0.9583cm,font=\fontsize{6.7}{8.58}\selectfont] at (845.0,901.5) {获取主观评\\价数据};
+\node[box,fill=chdr,line width=0.55pt,minimum width=8.2500cm,minimum height=0.6250cm,font=\fontsize{6.7}{8.58}\selectfont] at (611.0,1006.5) {\bfseries XXXXXXXXXXXXXXXX数据采集与实测样本匹配};
+\draw[dotted,line cap=round,dash pattern=on 0.6pt off 1.6pt,draw=cline,line width=1pt] (320.0,1040.0) rectangle (792.0,1168.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=6.4722cm,minimum height=0.5833cm,font=\fontsize{6.7}{8.58}\selectfont] at (557.0,1071.0) {同步生理监测};
+\draw[draw=cline,line width=0.55pt] (557.0,1092.0) -- (557.0,1107.0);
+\draw[draw=cline,line width=0.55pt] (436.0,1107.0) -- (681.0,1107.0);
+\draw[draw=cline,line width=0.55pt] (436.0,1107.0) -- (436.0,1116.0);
+\draw[draw=cline,line width=0.55pt] (680.0,1107.0) -- (680.0,1116.0);
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.1111cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (436.0,1138.0) {心率监测};
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.1111cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (680.0,1138.0) {肌电活动监测};
+\node[box,fill=cbox,line width=0.55pt,minimum width=0.7778cm,minimum height=1.7778cm,font=\fontsize{6.7}{8.58}\selectfont] at (880.0,1104.0) {数\\据\\整\\理};
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (792.0,1104.0) -- (852.0,1104.0);
+\node[box,fill=chdr,line width=0.55pt,minimum width=8.2778cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (611.0,1235.0) {\bfseries 基于模型运算结果解析噪声 — 生理响应 — 恢复效应的内在作用机制};
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.7917cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (449.5,1291.0) {总结关键路径};
+\node[box,fill=cbox,line width=0.55pt,minimum width=3.7917cm,minimum height=0.6111cm,font=\fontsize{6.7}{8.58}\selectfont] at (772.5,1291.0) {提出设计策略};
+\draw[draw=cline,line width=0.55pt] (449.0,1313.0) -- (449.0,1329.0);
+\draw[draw=cline,line width=0.55pt] (772.0,1313.0) -- (772.0,1329.0);
+\draw[draw=cline,line width=0.55pt] (449.0,1329.0) -- (772.0,1329.0);
+\draw[draw=cline,line width=0.55pt,-{Latex[length=1.2mm,width=0.95mm]}] (611.0,1329.0) -- (611.0,1345.0);
+\node[box,fill=chdr,line width=0.55pt,minimum width=8.2778cm,minimum height=0.6111cm,font=\fontsize{6.9}{8.83}\selectfont] at (611.0,1367.0) {\bfseries 为城市街旁绿地的恢复性提升和交通噪声治理提供科学依据};
+\end{tikzpicture}
+\end{document}
