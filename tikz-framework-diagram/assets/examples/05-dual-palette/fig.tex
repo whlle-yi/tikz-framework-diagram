@@ -1,0 +1,241 @@
+% !TEX program = xelatex
+% 城市内涝实时预警系统 —— 泳道式技术路线（单色 / 彩色两版）
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1.6cm]{geometry}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]
+\setmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]
+\xeCJKsetup{CJKecglue={}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\definecolor{monoLine}{HTML}{4D4D4D}
+\definecolor{monoHead}{HTML}{D9D9D9}
+\definecolor{navyDeep}{HTML}{2A4370}
+\definecolor{navyLight}{HTML}{D6E0EE}
+\definecolor{tealDeep}{HTML}{2C736E}
+\definecolor{tealLight}{HTML}{D3E7E4}
+\definecolor{warmDeep}{HTML}{B0702F}
+\definecolor{warmLight}{HTML}{F4E6D4}
+\definecolor{grayDeep}{HTML}{8A8A8A}
+\definecolor{grayLight}{HTML}{EFEFEF}
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+\begin{document}
+
+\begin{center}
+{\large\bfseries 城市内涝实时预警系统技术路线}\\[1pt]
+{\footnotesize 同一份几何，两种配色：四条泳道，每道六个环节}
+\end{center}
+
+\vspace{1pt}
+{\footnotesize\textbf{(a) 单色版}　黑白印刷稿用；层级由灰阶、字号与虚线分组表达。}
+
+\vspace{1pt}
+\begin{center}
+\begin{tikzpicture}[x=0.0138889cm,y=-0.0138889cm]
+\draw[draw=black,line width=0.8pt,fill=monoHead,rounded corners=9/72cm] (40.0,16.0) rectangle (1120.0,62.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.8}{12.32}\selectfont,text=black] at (580.0,39.0) {\bfseries 城市内涝：降雨看不准、积水算不出、预警发不快、处置不联动};
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=monoLine] (40.0,84.0) rectangle (280.0,590.0);
+\draw[draw=monoLine,line width=0.8pt,fill=monoHead] (40.0,84.0) rectangle (280.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 感知层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 多源观测}};
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,156.0) rectangle (255.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 雨量站网}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 分钟级 · 全网 32 站}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,212.0) -- (160.0,228.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,228.0) rectangle (255.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 水位流量计}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 关键节点 18 处}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,284.0) -- (160.0,300.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,300.0) rectangle (255.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 视频积水识别}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 路桥隧道 24 路}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,356.0) -- (160.0,372.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,372.0) rectangle (255.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 雷达降雨外推}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 6 分钟滚动}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,428.0) -- (160.0,444.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,444.0) rectangle (255.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 管网工况信号}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 泵站 12 座}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,500.0) -- (160.0,516.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,516.0) rectangle (255.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (160.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 工单与舆情}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 辅助核验}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.4mm,width=1.0mm]}] (286.0,102.0) -- (314.0,102.0);
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=monoLine] (320.0,84.0) rectangle (560.0,590.0);
+\draw[draw=monoLine,line width=0.8pt,fill=monoHead] (320.0,84.0) rectangle (560.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 数据层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 清洗与建库}};
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,156.0) rectangle (535.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 时钟对齐}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 统一到 1 分钟}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,212.0) -- (440.0,228.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,228.0) rectangle (535.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 缺测异常修复}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 规则 + 插值}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,284.0) -- (440.0,300.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,300.0) rectangle (535.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 汇水单元编码}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 划分为 46 个单元}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,356.0) -- (440.0,372.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,372.0) rectangle (535.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 内涝样本库}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 近 5 年 137 场}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,428.0) -- (440.0,444.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,444.0) rectangle (535.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 特征构建}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 雨强·坡度·管径}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,500.0) -- (440.0,516.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,516.0) rectangle (535.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (440.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 训练验证切分}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 时空分层抽样}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.4mm,width=1.0mm]}] (566.0,102.0) -- (594.0,102.0);
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=monoLine] (600.0,84.0) rectangle (840.0,590.0);
+\draw[draw=monoLine,line width=0.8pt,fill=monoHead] (600.0,84.0) rectangle (840.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 模型层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 推演与预报}};
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,156.0) rectangle (815.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 管网水动力模型}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 一维 Saint-Venant}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,212.0) -- (720.0,228.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,228.0) rectangle (815.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 地表漫流耦合}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 二维浅水方程}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,284.0) -- (720.0,300.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,300.0) rectangle (815.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 深度学习订正}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont LSTM 残差修正}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,356.0) -- (720.0,372.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,372.0) rectangle (815.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 积水深度预报}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 1h / 3h 滚动}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,428.0) -- (720.0,444.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,444.0) rectangle (815.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 不确定性区间}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 分位数回归}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,500.0) -- (720.0,516.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,516.0) rectangle (815.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (720.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 阈值标定}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 四级预警线}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.4mm,width=1.0mm]}] (846.0,102.0) -- (874.0,102.0);
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=monoLine] (880.0,84.0) rectangle (1120.0,590.0);
+\draw[draw=monoLine,line width=0.8pt,fill=monoHead] (880.0,84.0) rectangle (1120.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 服务层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 预警与联动}};
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,156.0) rectangle (1095.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 分级预警发布}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 短信 · App · 大屏}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,212.0) -- (1000.0,228.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,228.0) rectangle (1095.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 泵站联合调度}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 规则 + 优化}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,284.0) -- (1000.0,300.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,300.0) rectangle (1095.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 交通诱导联动}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 可变情报板}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,356.0) -- (1000.0,372.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,372.0) rectangle (1095.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 抢险资源调度}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 队伍与设备}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,428.0) -- (1000.0,444.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,444.0) rectangle (1095.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 处置效果回流}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 工单闭环}};
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,500.0) -- (1000.0,516.0);
+\draw[draw=monoLine,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,516.0) rectangle (1095.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 预案自学习}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 季度迭代}};
+\draw[line width=0.7pt,draw=monoLine] (160.0,572.0) -- (160.0,616.0);
+\draw[line width=0.7pt,draw=monoLine] (440.0,572.0) -- (440.0,616.0);
+\draw[line width=0.7pt,draw=monoLine] (720.0,572.0) -- (720.0,616.0);
+\draw[line width=0.7pt,draw=monoLine] (1000.0,572.0) -- (1000.0,616.0);
+\draw[line width=0.7pt,draw=monoLine] (160.0,616.0) -- (1000.0,616.0);
+\draw[line width=0.7pt,draw=monoLine,-{Latex[length=1.6mm,width=0.9mm]}] (580.0,616.0) -- (580.0,638.0);
+\draw[draw=black,line width=0.8pt,fill=monoHead,rounded corners=9/72cm] (40.0,638.0) rectangle (1120.0,670.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.0}{12.60}\selectfont,text=black] at (580.0,654.0) {\bfseries 支撑「监测—推演—预警—处置」闭环的城市内涝实时防控};
+\end{tikzpicture}
+\end{center}
+
+\vspace{5pt}
+{\footnotesize\textbf{(b) 彩色版}　同一套几何，仅替换配色：每条泳道一种色系，浅色作标题底、深色作描边与文字，道内连线跟随本道颜色。}
+
+\vspace{1pt}
+\begin{center}
+\begin{tikzpicture}[x=0.0138889cm,y=-0.0138889cm]
+\draw[draw=black,line width=0.8pt,fill=monoHead,rounded corners=9/72cm] (40.0,16.0) rectangle (1120.0,62.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.8}{12.32}\selectfont,text=black] at (580.0,39.0) {\bfseries 城市内涝：降雨看不准、积水算不出、预警发不快、处置不联动};
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=tealDeep] (40.0,84.0) rectangle (280.0,590.0);
+\draw[draw=tealDeep,line width=0.8pt,fill=tealLight] (40.0,84.0) rectangle (280.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 感知层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 多源观测}};
+\draw[draw=tealDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,156.0) rectangle (255.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 雨量站网}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 分钟级 · 全网 32 站}};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,212.0) -- (160.0,228.0);
+\draw[draw=tealDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,228.0) rectangle (255.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 水位流量计}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 关键节点 18 处}};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,284.0) -- (160.0,300.0);
+\draw[draw=tealDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,300.0) rectangle (255.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 视频积水识别}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 路桥隧道 24 路}};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,356.0) -- (160.0,372.0);
+\draw[draw=tealDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,372.0) rectangle (255.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 雷达降雨外推}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 6 分钟滚动}};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,428.0) -- (160.0,444.0);
+\draw[draw=tealDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,444.0) rectangle (255.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 管网工况信号}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 泵站 12 座}};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.3mm,width=0.9mm]}] (160.0,500.0) -- (160.0,516.0);
+\draw[draw=tealDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (65.0,516.0) rectangle (255.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=tealDeep] at (160.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 工单与舆情}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 辅助核验}};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.4mm,width=1.0mm]}] (286.0,102.0) -- (314.0,102.0);
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=navyDeep] (320.0,84.0) rectangle (560.0,590.0);
+\draw[draw=navyDeep,line width=0.8pt,fill=navyLight] (320.0,84.0) rectangle (560.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 数据层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 清洗与建库}};
+\draw[draw=navyDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,156.0) rectangle (535.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 时钟对齐}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 统一到 1 分钟}};
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,212.0) -- (440.0,228.0);
+\draw[draw=navyDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,228.0) rectangle (535.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 缺测异常修复}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 规则 + 插值}};
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,284.0) -- (440.0,300.0);
+\draw[draw=navyDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,300.0) rectangle (535.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 汇水单元编码}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 划分为 46 个单元}};
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,356.0) -- (440.0,372.0);
+\draw[draw=navyDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,372.0) rectangle (535.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 内涝样本库}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 近 5 年 137 场}};
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,428.0) -- (440.0,444.0);
+\draw[draw=navyDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,444.0) rectangle (535.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 特征构建}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 雨强·坡度·管径}};
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.3mm,width=0.9mm]}] (440.0,500.0) -- (440.0,516.0);
+\draw[draw=navyDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (345.0,516.0) rectangle (535.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=navyDeep] at (440.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 训练验证切分}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 时空分层抽样}};
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.4mm,width=1.0mm]}] (566.0,102.0) -- (594.0,102.0);
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=warmDeep] (600.0,84.0) rectangle (840.0,590.0);
+\draw[draw=warmDeep,line width=0.8pt,fill=warmLight] (600.0,84.0) rectangle (840.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 模型层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 推演与预报}};
+\draw[draw=warmDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,156.0) rectangle (815.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 管网水动力模型}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 一维 Saint-Venant}};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,212.0) -- (720.0,228.0);
+\draw[draw=warmDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,228.0) rectangle (815.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 地表漫流耦合}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 二维浅水方程}};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,284.0) -- (720.0,300.0);
+\draw[draw=warmDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,300.0) rectangle (815.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 深度学习订正}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont LSTM 残差修正}};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,356.0) -- (720.0,372.0);
+\draw[draw=warmDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,372.0) rectangle (815.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 积水深度预报}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 1h / 3h 滚动}};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,428.0) -- (720.0,444.0);
+\draw[draw=warmDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,444.0) rectangle (815.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 不确定性区间}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 分位数回归}};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.3mm,width=0.9mm]}] (720.0,500.0) -- (720.0,516.0);
+\draw[draw=warmDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (625.0,516.0) rectangle (815.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=warmDeep] at (720.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 阈值标定}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 四级预警线}};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.4mm,width=1.0mm]}] (846.0,102.0) -- (874.0,102.0);
+\draw[dashed,dash pattern=on 2.0pt off 1.6pt,line width=0.7pt,draw=grayDeep] (880.0,84.0) rectangle (1120.0,590.0);
+\draw[draw=grayDeep,line width=0.8pt,fill=grayLight] (880.0,84.0) rectangle (1120.0,140.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,112.0) {{\fontsize{9.40}{10.81}\selectfont\bfseries 服务层}\\[2.00pt]{\fontsize{7.00}{8.40}\selectfont 预警与联动}};
+\draw[draw=grayDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,156.0) rectangle (1095.0,212.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,184.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 分级预警发布}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 短信 · App · 大屏}};
+\draw[line width=0.7pt,draw=grayDeep,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,212.0) -- (1000.0,228.0);
+\draw[draw=grayDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,228.0) rectangle (1095.0,284.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,256.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 泵站联合调度}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 规则 + 优化}};
+\draw[line width=0.7pt,draw=grayDeep,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,284.0) -- (1000.0,300.0);
+\draw[draw=grayDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,300.0) rectangle (1095.0,356.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,328.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 交通诱导联动}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 可变情报板}};
+\draw[line width=0.7pt,draw=grayDeep,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,356.0) -- (1000.0,372.0);
+\draw[draw=grayDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,372.0) rectangle (1095.0,428.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,400.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 抢险资源调度}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 队伍与设备}};
+\draw[line width=0.7pt,draw=grayDeep,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,428.0) -- (1000.0,444.0);
+\draw[draw=grayDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,444.0) rectangle (1095.0,500.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,472.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 处置效果回流}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 工单闭环}};
+\draw[line width=0.7pt,draw=grayDeep,-{Latex[length=1.3mm,width=0.9mm]}] (1000.0,500.0) -- (1000.0,516.0);
+\draw[draw=grayDeep,line width=0.7pt,fill=white,rounded corners=7/72cm] (905.0,516.0) rectangle (1095.0,572.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,text=black] at (1000.0,544.0) {{\fontsize{8.30}{9.54}\selectfont\bfseries 预案自学习}\\[1.00pt]{\fontsize{6.60}{7.92}\selectfont 季度迭代}};
+\draw[line width=0.7pt,draw=tealDeep] (160.0,572.0) -- (160.0,616.0);
+\draw[line width=0.7pt,draw=navyDeep] (440.0,572.0) -- (440.0,616.0);
+\draw[line width=0.7pt,draw=warmDeep] (720.0,572.0) -- (720.0,616.0);
+\draw[line width=0.7pt,draw=grayDeep] (1000.0,572.0) -- (1000.0,616.0);
+\draw[line width=0.7pt,draw=navyDeep] (160.0,616.0) -- (1000.0,616.0);
+\draw[line width=0.7pt,draw=navyDeep,-{Latex[length=1.6mm,width=0.9mm]}] (580.0,616.0) -- (580.0,638.0);
+\draw[draw=white,line width=0.8pt,fill=navyDeep,rounded corners=9/72cm] (40.0,638.0) rectangle (1120.0,670.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.0}{12.60}\selectfont,text=white] at (580.0,654.0) {\bfseries 支撑「监测—推演—预警—处置」闭环的城市内涝实时防控};
+\end{tikzpicture}
+\end{center}
+
+\vspace{3pt}
+{\footnotesize
+\textbf{图例}　虚线框 = 泳道边界；竖向箭头 = 道内工序；横向箭头 = 泳道推进；底部横线 = 成果汇合。\\[2pt]
+\textbf{两版仅有颜色差异}　几何、字号、间距、线宽完全一致：标题条 \texttt{\#D9D9D9} → 本泳道浅档；
+框线 \texttt{\#4D4D4D} → 本泳道深档；成果条 \texttt{\#D9D9D9}+黑字 → 主色深档+白字。
+}
+
+\end{document}

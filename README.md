@@ -25,7 +25,7 @@ TikZ 默认画出来的图一看就是"代码生成"的：字号随意、留白�
 
 <img src="tikz-framework-diagram/assets/examples/04-color-scheme/preview.png" width="520">
 
-## 四种版式成品
+## 五种版式成品
 
 | 示例 | 版式 | 亮点 |
 |---|---|---|
@@ -33,6 +33,7 @@ TikZ 默认画出来的图一看就是"代码生成"的：字号随意、留白�
 | [`02-research-framework`](tikz-framework-diagram/assets/examples/02-research-framework) | 三列框架（步骤 / 内容 / 方法） | 5 个虚线单元、树形支架、竖排标签 |
 | [`03-tech-architecture`](tikz-framework-diagram/assets/examples/03-tech-architecture) | 分层架构 | 圆柱、立体卡片、胶囊标题、双向箭头 |
 | [`04-color-scheme`](tikz-framework-diagram/assets/examples/04-color-scheme) | 分层架构（彩色） | 三色系色板、浅填充 + 深描边、细箭头 |
+| [`05-dual-palette`](tikz-framework-diagram/assets/examples/05-dual-palette) | 泳道式（四道 × 六环节） | 24 环节的密度；同一份内容出单色 / 彩色两版，合并在一个 LaTeX 文件 |
 
 每个目录都有 `fig.tex`（可 `xelatex` 直接编译）、`fig.pdf`、`preview.png`；
 `02` / `03` 还带 `gen.py`，是从坐标表生成 `.tex` 的完整例子。
@@ -57,7 +58,7 @@ skills 目录通常在用户主目录下（如 `~/.claude/skills/`），也可�
 
 技能会走这条链路：
 
-1. **定版式** —— 从五种骨架里选（单列 / 三列框架 / 分层架构 / 树形分解 / 矩阵对照），先出层级清单
+1. **定版式** —— 从六种骨架里选（单列 / 三列框架 / 分层架构 / 树形分解 / 矩阵对照 / 泳道式），先出层级清单
 2. **套令牌** —— 单色或彩色二选一：字号、灰阶（或色板）、线宽、圆角、间距、箭头尺寸全部取自令牌表
 3. **选图元** —— 矩形 / 圆角 / 胶囊 / 圆柱 / 立体卡片 / 块箭头 / 树形支架 / 共边标签框
 4. **写生成器** —— 用 `scaffold.py` 的数据表结构，不手写 `.tex`
@@ -76,7 +77,7 @@ skills 目录通常在用户主目录下（如 `~/.claude/skills/`），也可�
     ├── SKILL.md                     入口：三条原则 + 6 步工作流 + 索引
     ├── references/
     │   ├── 01-style.md              视觉语言与设计令牌表（核心）
-    │   ├── 02-layouts.md            五种版式骨架 + 结构参数
+    │   ├── 02-layouts.md            六种版式骨架 + 结构参数
     │   ├── 03-shapes.md             图元库
     │   ├── 04-text.md               中文排版：字号层级、逐字逐行定位、断行
     │   ├── 05-tex-setup.md          工程配置：单位换算、字体、线宽、颜色
