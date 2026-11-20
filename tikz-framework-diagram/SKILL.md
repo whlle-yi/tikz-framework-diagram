@@ -31,8 +31,13 @@ agent_created: true
 选完先写一份"层级清单"：几行、每行几个、谁连谁。
 
 ### 2. 套风格令牌
-读 [references/01-style.md](references/01-style.md)，取字号、灰阶、线宽、圆角、间距、箭头尺寸。
-这些数值提炼自已发表的期刊插图，直接用，不要重新发明。
+先定单色还是彩色：
+
+- **单色（默认）** —— 读 [references/01-style.md](references/01-style.md)，取字号、灰阶、线宽、圆角、间距、箭头尺寸。
+  黑白印刷稿一律用这套。
+- **彩色** —— 读 [references/09-color.md](references/09-color.md)，几何与字号仍用 01，只把灰阶换成"三色系 + 中性灰"的深浅两档。
+
+两套令牌都提炼自已发表的期刊插图，直接用，不要重新发明。
 
 ### 3. 选图元
 读 [references/03-shapes.md](references/03-shapes.md)：矩形、圆角、胶囊、圆柱、立体卡片、块箭头、树形支架、虚线容器、共边标签框。
@@ -52,17 +57,18 @@ agent_created: true
 
 ## 参考成品
 
-`assets/examples/` 下有三张按本风格完成的图，可直接编译，也是参数取法的样例：
+`assets/examples/` 下有四张按本风格完成的图，可直接编译，也是参数取法的样例：
 
 | 目录 | 版式 | 亮点 |
 |---|---|---|
 | `01-top-level-plan` | 单列纵向 + 左侧三段大箭头 | 最小可用样例 |
 | `02-research-framework` | 三列框架（步骤 / 内容 / 方法） | 5 个虚线单元、树形支架、竖排标签 |
 | `03-tech-architecture` | 分层架构 | 圆柱、立体卡片、胶囊标题、双向箭头 |
+| `04-color-scheme` | 分层架构（彩色版） | 三色系色板、浅填充 + 深描边、细箭头 |
 
-改风格前先看一眼这三张，改完对照着看有没有跑偏。
+改版式前先看这几张，改完对照着看有没有跑偏。1–3 是单色，4 是彩色。
 
 ## 出问题先查
 
-[references/08-pitfalls.md](references/08-pitfalls.md)：16 条按"症状 → 原因 → 修法"排的踩坑。
+[references/08-pitfalls.md](references/08-pitfalls.md)：15 条按"症状 → 原因 → 修法"排的踩坑。
 "文字溢出框外 / 箭头只剩个头 / 框被斜线穿过 / 整块看着歪"这几类，那里都有现成答案。

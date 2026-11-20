@@ -1,0 +1,60 @@
+% !TEX program = xelatex
+% 彩色方案样例：三层架构
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{xeCJK}
+\setCJKmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]
+\setmainfont{Microsoft YaHei}[BoldFont={Microsoft YaHei Bold}]
+\xeCJKsetup{CJKecglue={}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\definecolor{mainDeep}{HTML}{2A4370}
+\definecolor{mainLight}{HTML}{D6E0EE}
+\definecolor{tealDeep}{HTML}{2C736E}
+\definecolor{tealLight}{HTML}{D3E7E4}
+\definecolor{warmDeep}{HTML}{B0702F}
+\definecolor{warmLight}{HTML}{F4E6D4}
+\begin{document}
+\begin{tikzpicture}[x=0.0138889cm,y=-0.0138889cm]
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,line width=0.7pt,draw=tealDeep] (60.0,40.0) rectangle (876.0,190.0);
+\draw[draw=tealDeep,line width=0.7pt,fill=tealLight,rounded corners=0.1111cm] (68.0,50.0) rectangle (150.0,180.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=tealDeep] at (109.0,79.7) {数};
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=tealDeep] at (109.0,115.0) {据};
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=tealDeep] at (109.0,150.3) {层};
+\draw[draw=tealDeep,line width=0.7pt,fill=white] (160.0,80.0) rectangle (380.0,150.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=tealDeep] at (270.0,115.0) {多源采集};
+\draw[draw=tealDeep,line width=0.7pt,fill=white] (404.0,80.0) rectangle (624.0,150.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=tealDeep] at (514.0,115.0) {清洗对齐};
+\draw[draw=tealDeep,line width=0.7pt,fill=white] (648.0,80.0) rectangle (868.0,150.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=tealDeep] at (758.0,115.0) {特征构建};
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.4mm,width=1.0mm]}] (380.0,115.0) -- (404.0,115.0);
+\draw[line width=0.7pt,draw=tealDeep,-{Latex[length=1.4mm,width=1.0mm]}] (624.0,115.0) -- (648.0,115.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,line width=0.7pt,draw=mainDeep] (60.0,232.0) rectangle (876.0,382.0);
+\draw[draw=mainDeep,line width=0.7pt,fill=mainLight,rounded corners=0.1111cm] (68.0,242.0) rectangle (150.0,372.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=mainDeep] at (109.0,271.7) {模};
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=mainDeep] at (109.0,307.0) {型};
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=mainDeep] at (109.0,342.3) {层};
+\draw[draw=mainDeep,line width=0.7pt,fill=white] (160.0,272.0) rectangle (380.0,342.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=mainDeep] at (270.0,307.0) {训练调度};
+\draw[draw=mainDeep,line width=0.7pt,fill=white] (404.0,272.0) rectangle (624.0,342.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=mainDeep] at (514.0,307.0) {效果评估};
+\draw[draw=mainDeep,line width=0.7pt,fill=white] (648.0,272.0) rectangle (868.0,342.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=mainDeep] at (758.0,307.0) {轻量化};
+\draw[line width=0.7pt,draw=mainDeep,-{Latex[length=1.4mm,width=1.0mm]}] (380.0,307.0) -- (404.0,307.0);
+\draw[line width=0.7pt,draw=mainDeep,-{Latex[length=1.4mm,width=1.0mm]}] (624.0,307.0) -- (648.0,307.0);
+\draw[dashed,dash pattern=on 1.7pt off 1.3pt,line width=0.7pt,draw=warmDeep] (60.0,424.0) rectangle (876.0,574.0);
+\draw[draw=warmDeep,line width=0.7pt,fill=warmLight,rounded corners=0.1111cm] (68.0,434.0) rectangle (150.0,564.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=warmDeep] at (109.0,463.7) {应};
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=warmDeep] at (109.0,499.0) {用};
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{9.2}{12.88}\selectfont,text=warmDeep] at (109.0,534.3) {层};
+\draw[draw=warmDeep,line width=0.7pt,fill=white] (160.0,464.0) rectangle (380.0,534.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=warmDeep] at (270.0,499.0) {系统集成};
+\draw[draw=warmDeep,line width=0.7pt,fill=white] (404.0,464.0) rectangle (624.0,534.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=warmDeep] at (514.0,499.0) {现场验证};
+\draw[draw=warmDeep,line width=0.7pt,fill=white] (648.0,464.0) rectangle (868.0,534.0);
+\node[align=center,inner sep=0pt,outer sep=0pt,font=\fontsize{8.3}{11.62}\selectfont,text=warmDeep] at (758.0,499.0) {成果输出};
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.4mm,width=1.0mm]}] (380.0,499.0) -- (404.0,499.0);
+\draw[line width=0.7pt,draw=warmDeep,-{Latex[length=1.4mm,width=1.0mm]}] (624.0,499.0) -- (648.0,499.0);
+\draw[fill=white,draw=mainDeep,line width=0.7pt] (451.0,196.0) -- (485.0,196.0) -- (485.0,212.0) -- (501.0,212.0) -- (468.0,226.0) -- (435.0,212.0) -- (451.0,212.0) -- cycle;
+\draw[fill=white,draw=warmDeep,line width=0.7pt] (451.0,388.0) -- (485.0,388.0) -- (485.0,404.0) -- (501.0,404.0) -- (468.0,418.0) -- (435.0,404.0) -- (451.0,404.0) -- cycle;
+\end{tikzpicture}
+\end{document}

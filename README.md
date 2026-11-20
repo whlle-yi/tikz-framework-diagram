@@ -17,16 +17,22 @@ TikZ 默认画出来的图一看就是"代码生成"的：字号随意、留白�
 - **虚线只管分组**，不用于强调；点线只用于次级容器
 - **两种箭头**：空心块箭头（层级递进）、细实心箭头（元素流转）
 - **字号只有 4 级**：11pt 标题 / 8.3pt 粗体区块标题 / 8.3pt 正文 / 6.5pt 小注
+- **两套配色**：单色灰阶（默认，黑白印刷）/ 彩色（三色系 + 中性灰，浅填充 + 深描边，深档灰度拉开 ≥20 保证转黑白仍可辨）
 
 <img src="tikz-framework-diagram/assets/examples/02-research-framework/preview.png" width="420"> <img src="tikz-framework-diagram/assets/examples/03-tech-architecture/preview.png" width="420">
 
-## 三种版式成品
+彩色方案（同一套骨架，只换配色）：
+
+<img src="tikz-framework-diagram/assets/examples/04-color-scheme/preview.png" width="520">
+
+## 四种版式成品
 
 | 示例 | 版式 | 亮点 |
 |---|---|---|
 | [`01-top-level-plan`](tikz-framework-diagram/assets/examples/01-top-level-plan) | 单列纵向 + 左侧贯穿大箭头 | 最小可用样例 |
 | [`02-research-framework`](tikz-framework-diagram/assets/examples/02-research-framework) | 三列框架（步骤 / 内容 / 方法） | 5 个虚线单元、树形支架、竖排标签 |
 | [`03-tech-architecture`](tikz-framework-diagram/assets/examples/03-tech-architecture) | 分层架构 | 圆柱、立体卡片、胶囊标题、双向箭头 |
+| [`04-color-scheme`](tikz-framework-diagram/assets/examples/04-color-scheme) | 分层架构（彩色） | 三色系色板、浅填充 + 深描边、细箭头 |
 
 每个目录都有 `fig.tex`（可 `xelatex` 直接编译）、`fig.pdf`、`preview.png`；
 `02` / `03` 还带 `gen.py`，是从坐标表生成 `.tex` 的完整例子。
@@ -52,7 +58,7 @@ skills 目录通常在用户主目录下（如 `~/.claude/skills/`），也可�
 技能会走这条链路：
 
 1. **定版式** —— 从五种骨架里选（单列 / 三列框架 / 分层架构 / 树形分解 / 矩阵对照），先出层级清单
-2. **套令牌** —— 字号、灰阶、线宽、圆角、间距、箭头尺寸全部取自令牌表
+2. **套令牌** —— 单色或彩色二选一：字号、灰阶（或色板）、线宽、圆角、间距、箭头尺寸全部取自令牌表
 3. **选图元** —— 矩形 / 圆角 / 胶囊 / 圆柱 / 立体卡片 / 块箭头 / 树形支架 / 共边标签框
 4. **写生成器** —— 用 `scaffold.py` 的数据表结构，不手写 `.tex`
 5. **编译** —— `xelatex`，中文字体走 `xeCJK`
@@ -75,7 +81,8 @@ skills 目录通常在用户主目录下（如 `~/.claude/skills/`），也可�
     │   ├── 04-text.md               中文排版：字号层级、逐字逐行定位、断行
     │   ├── 05-tex-setup.md          工程配置：单位换算、字体、线宽、颜色
     │   ├── 06-checklist.md          交付前 12 项自检
-    │   └── 08-pitfalls.md           15 条踩坑
+    │   ├── 08-pitfalls.md           15 条踩坑
+    │   └── 09-color.md              彩色方案：色板、映射、灰度可辨性检查
     ├── scripts/
     │   └── scaffold.py              生成器骨架
     └── assets/examples/             三份可直接编译的成品
