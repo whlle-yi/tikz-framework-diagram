@@ -1,80 +1,83 @@
 # tikz-flowchart-replica
 
-把位图流程图重绘为**像素级对齐**的 TikZ 矢量图。
+一个 **WorkBuddy / Claude 技能（skill）**：把位图流程图重绘为**像素级对齐**的 TikZ 矢量图。
 
-面向学术论文、技术文档里的研究框架图 / 技术路线图 / 系统架构图——这类图的特点是同质元素多（几十个方框）、连线规则（树形支架、虚线分组容器）、中文排版（竖排标签、多行窄栏），肉眼目测重画必然错在行高、间距和连线端点上。
+适用于学术论文、技术文档里的研究框架图、技术路线图、系统架构图——这类图几十个同质方框、连线规则（树形支架、虚线分组容器）、中文排版（竖排标签、多行窄栏），靠肉眼重画必然错在行高、间距和连线端点上。这个技能把它变成"先测量、再生成、后比对"的确定性流程。
 
-本项目提供一套**可复现的方法 + 三个可直接运行的脚本**，把"照着重画"变成"先测量、再生成、后比对"的确定性流程。
+仓库本身是**承载这个 skill 的项目**：README / LICENSE 等外围文件在根目录，skill 本体在 [`tikz-flowchart-replica/`](tikz-flowchart-replica) 子目录，结构与安装到 skills 目录里的完全一致，拷走即用。
 
 ## 效果
 
 | 示例 | 内容 | 规模 |
 |---|---|---|
-| [01 顶层规划图](examples/01-top-level-plan) | 工业大模型落地总体顶层规划 | 单列 5 段、约 20 个元素 |
-| [02 研究框架图](examples/02-research-framework) | 研究内容 / 研究方法 / 研究步骤三列框架 | 约 60 个元素、5 个虚线容器 |
-| [03 技术架构图](examples/03-tech-architecture) | 数据处理 → 模型搭建 → 模型优化 → 成果落地 | 约 70 个元素、圆柱 / 立体卡片 / 竖排标签 |
+| [01 顶层规划图](tikz-flowchart-replica/assets/examples/01-top-level-plan) | 工业大模型落地总体顶层规划 | 单列 5 段，约 20 个元素 |
+| [02 研究框架图](tikz-flowchart-replica/assets/examples/02-research-framework) | 研究内容 / 研究方法 / 研究步骤三列框架 | 约 60 个元素、5 个虚线容器 |
+| [03 技术架构图](tikz-flowchart-replica/assets/examples/03-tech-architecture) | 数据处理 → 模型搭建 → 模型优化 → 成果落地 | 约 70 个元素，含圆柱、立体卡片、竖排标签 |
 
-> 三个示例的源图均为已发表论文插图，未随仓库分发；`examples/*/preview.png` 是复刻结果。
+<img src="tikz-flowchart-replica/assets/examples/02-research-framework/preview.png" width="420"> <img src="tikz-flowchart-replica/assets/examples/03-tech-architecture/preview.png" width="420">
 
-预览：
+> 复刻对象是已发表论文的插图，源图未随仓库分发，上面的图为复刻结果。各示例目录内都有 `fig.pdf` 与 `preview.png`。
 
-<img src="examples/02-research-framework/preview.png" width="420"> <img src="examples/03-tech-architecture/preview.png" width="420">
+## 安装
 
-## 四条铁律
-
-1. **先量后画** —— 所有坐标来自像素测量，不靠目测。
-2. **坐标即像素** —— `x=0.0138889cm, y=-0.0138889cm`，1 单位 = 1px = 1/72cm，代码里直接写原图坐标。
-3. **用脚本生成 TikZ** —— 几十个节点手写必错，改动成本极高。数据表与渲染函数分离。
-4. **必须叠色比对** —— 渲染 → 叠色 → 找差异 → 改生成器 → 再比对，直到线条重合。
-
-## 环境
-
-- TeX Live（需 `xelatex`、`xeCJK`、`fontspec`）
-- 中文字体：Windows 用 `Microsoft YaHei`，其它平台改 `\setCJKmainfont`（思源黑体 / Noto Sans CJK 均可）
-- Python 3.8+：`pip install numpy pillow pymupdf`
-
-## 快速开始
+把 `tikz-flowchart-replica/` 子目录整个拷到 skills 目录即可：
 
 ```bash
-# 1) 量取几何：先看清骨架
-python scripts/measure.py hlines 素材/fig.jpg --x0 300 --x1 920
-python scripts/measure.py edges  素材/fig.jpg --y0 215 --y1 260      # 一排框的左右边界
-python scripts/measure.py ink    素材/fig.jpg --x0 330 --y0 75 --x1 450 --y1 110 --chars 7
-python scripts/measure.py art    素材/fig.jpg --x0 300 --y0 118 --x1 920 --y1 250
-
-# 2) 写生成器（从骨架开始）
-cp scripts/scaffold.py gen.py        # 把测得的坐标填进去
-python gen.py && xelatex fig.tex
-
-# 3) 叠色比对，迭代到重合
-python -c "import pymupdf; pymupdf.open('fig.pdf')[0].get_pixmap(dpi=183).save('out.png')"
-python scripts/overlay.py 素材/fig.jpg out.png --orig 141,38,1076,1417 --out overlay.png --diff
+git clone https://github.com/<you>/tikz-flowchart-replica.git
+cp -r tikz-flowchart-replica/tikz-flowchart-replica ~/.workbuddy/skills/
 ```
 
-叠色图的颜色语义：**红 = 我的、蓝 = 原图、黑 = 重合**。
+装好后，说"用 tikz 复刻这个流程图"、"把这张图做成矢量图"、"redraw this diagram in LaTeX" 会自动触发。
 
-## 目录
+## 环境依赖
+
+- TeX Live，需 `xelatex` + `xeCJK` + `fontspec`
+- 中文字体：Windows 用 `Microsoft YaHei`；其它平台改 `\setCJKmainfont`（思源黑体 / Noto Sans CJK 均可）
+- Python 3.8+：`pip install numpy pillow pymupdf`
+
+## 技能怎么工作
+
+四条铁律：
+
+1. **先量后画** —— 所有坐标来自像素测量，不靠目测
+2. **坐标即像素** —— `x=0.0138889cm, y=-0.0138889cm`，1 单位 = 1px = 1/72cm，代码里直接写原图坐标
+3. **用脚本生成 TikZ** —— 几十个节点手写必错；数据表与渲染函数分离
+4. **必须叠色比对** —— 渲染 → 叠色 → 找差异 → 改生成器 → 再比对，直到线条重合
+
+七步工作流：分清图与页面 → 量取几何 → 工程配置 → 拆解图元 → 写生成器 → 编译 → 叠色迭代。详见 [`SKILL.md`](tikz-flowchart-replica/SKILL.md) 与 [`references/`](tikz-flowchart-replica/references)。
+
+## 仓库结构
 
 ```
-docs/                       方法详解（按工作流顺序编排）
-  00-workflow.md            7 步工作流总览与判定标准
-  01-measure.md             从位图量取几何：三类扫描、虚线识别、字号推算、ASCII 结构图
-  02-tex-setup.md           工程配置：单位、字号 px→pt 换算表、线宽、颜色、编译
-  03-shapes.md              图元库：矩形/圆角/胶囊/圆柱/立体卡片/块箭头/树形支架/共边标签框
-  04-text.md                中文排版：字号=字宽、逐字逐行定位、竖排、行距、换行照抄
-  05-verify.md              叠色比对：1:1 渲染、偏移换算、症状→修法对照表
-  06-pitfalls.md            15 条真实踩坑
-scripts/
-  measure.py                几何测量 CLI（hlines/vlines/edges/dashed/ink/row/col/art）
-  overlay.py                红蓝叠色比对，含差异图与"原图独有像素占比"
-  scaffold.py               生成器骨架（box / mlines / chars_at / varrow / cylinder / box3d / label_box / tree）
-examples/
-  01-top-level-plan/        手写版（小图，约 20 个元素）
-  02-research-framework/    gen.py 版（60 元素，5 个虚线容器）
-  03-tech-architecture/     gen.py 版（70 元素，含圆柱与立体卡片）
+.
+├── README.md                  ← 你正在看的
+├── LICENSE
+├── .gitignore
+├── .gitattributes
+└── tikz-flowchart-replica/    ← skill 本体
+    ├── SKILL.md               入口：四条铁律 + 7 步工作流 + 索引
+    ├── references/            方法详解，按需加载
+    │   ├── 01-measure.md      从位图量取几何：三类扫描、虚线识别、字号推算、ASCII 结构图
+    │   ├── 02-tex-setup.md    工程配置：单位、字号 px→pt 换算表、线宽、颜色、编译
+    │   ├── 03-shapes.md       图元库：矩形/圆角/胶囊/圆柱/立体卡片/块箭头/树形支架/共边标签框
+    │   ├── 04-text.md         中文排版：字号=字宽、逐字逐行定位、竖排、行距、换行照抄
+    │   ├── 05-verify.md       叠色比对：1:1 渲染、偏移换算、症状→修法对照表
+    │   └── 06-pitfalls.md     15 条真实踩坑
+    ├── scripts/
+    │   ├── measure.py         几何测量 CLI：hlines / vlines / edges / dashed / ink / row / col / art
+    │   ├── overlay.py         红蓝叠色比对，含差异图与"原图独有像素占比"
+    │   └── scaffold.py        生成器骨架：box / mlines / chars_at / varrow / cylinder / box3d / label_box / tree
+    └── assets/
+        └── examples/          三份已验证成品（fig.tex + gen.py + fig.pdf + preview.png）
 ```
 
-每个示例目录都有 `gen.py`（若为生成式）、`fig.tex`、`fig.pdf`、`preview.png`，可直接 `xelatex fig.tex` 复现。
+## 单独跑示例
+
+```bash
+cd tikz-flowchart-replica/assets/examples/03-tech-architecture
+python gen.py && xelatex fig.tex              # 有 gen.py 的可从零复现
+cd ../01-top-level-plan && xelatex fig.tex    # 手写版，直接编译
+```
 
 ## 为什么不能直接画
 
@@ -83,19 +86,20 @@ examples/
 | 症状 | 真因 |
 |---|---|
 | 空心箭头只剩一个三角 | 总高 16px、箭头长 13px，箭轴只剩 3px。约束：**总高 ≥ 头长 + 8** |
-| 外围被画成一个大虚线框 | 实际是**三个并排的虚线单元**。虚线覆盖率只有 55%，用 0.7 阈值扫描会整条漏掉 |
+| 外围被画成一个大虚线框 | 实际是**三个并排的虚线单元**。虚线覆盖率只有 55%，用 0.7 的阈值扫描会整条漏掉 |
 | 方框被一条斜线穿过 | 三段式路径的末段加了 `-- cycle`，`cycle` 回到的是**当前子路径起点**，不是整条 path 的起点 |
 
-这些靠肉眼扫全图都发现不了，只有叠色图能一眼看出来。详见 [docs/06-pitfalls.md](docs/06-pitfalls.md)。
+这些靠肉眼扫全图都发现不了，只有叠色图能一眼看出来。完整清单见 [`06-pitfalls.md`](tikz-flowchart-replica/references/06-pitfalls.md)。
 
 ## 适用范围与限制
 
 适用：正交排布的流程图、框架图、架构图，中文或中英混排，黑白/灰阶印刷风格。
 
 不适用：
+
 - 自由曲线、手绘风格、大量斜线交叉的图
-- 需要严格还原原图滤镜、阴影、渐变的效果图
-- 位图里文字本身模糊到无法辨认时（先人工确认文字）
+- 需要还原滤镜、阴影、渐变的效果图
+- 位图里文字模糊到无法辨认（需先人工确认文字）
 
 字体差异（笔画粗细、字面大小）无法做到与位图逐像素一致，叠色图上会有 1~2px 的亚像素边缘差，属正常范围。
 
