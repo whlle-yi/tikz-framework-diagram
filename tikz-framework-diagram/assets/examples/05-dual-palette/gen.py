@@ -136,10 +136,18 @@ LB0, LB1 = 54, 112
 B0, B1 = 168, 946
 MID = (B0 + B1) / 2                      # 557
 
-C1 = (40, 430)
-C2 = (470, 1010)
-C3 = (1050, 1340)
-C4 = (1374, 1442)
+C1 = (40, 404)
+C2 = (450, 764)
+C3 = (804, 1086)
+C4 = (1126, 1194)
+
+PAD_MAX = 42     # 容器到内容的最大允许留白（单位=1/72cm），超了就是"空一大块"
+
+
+def fit(name, c_top, c_bot, b_top, b_bot):
+    """容器必须贴着内容包：上下留白都不许超过 PAD_MAX。"""
+    assert b_top - c_top <= PAD_MAX, f"{name} 顶部留白 {b_top-c_top} > {PAD_MAX}"
+    assert b_bot - c_bot <= PAD_MAX, f"{name} 底部留白 {b_bot-c_bot} > {PAD_MAX}"
 
 
 def draw(ts):
@@ -153,27 +161,28 @@ def draw(ts):
     label_box(LB0, C1[0] + 14, LB1, C1[1] - 14, "数据治理", L1)
     cxs = [257, 457, 657, 857]
     for cx, name in zip(cxs, CYL):
-        cylinder(cx, 70, 158, 89, 9, name, L1)
-    line(cxs[0], 190, cxs[-1], 190, L1)
+        cylinder(cx, 68, 166, 89, 9, name, L1)
+    line(cxs[0], 196, cxs[-1], 196, L1)
     for cx in cxs:
-        line(cx, 167, cx, 190, L1)
-    line(578, 190, 578, 226, L1)
-    card3d(257, 857, 268, 378, 42, 42, CARD_T, CARD_B, L1, S1)
+        line(cx, 175, cx, 196, L1)
+    line(578, 196, 578, 222, L1)
+    card3d(257, 857, 264, 374, 42, 42, CARD_T, CARD_B, L1, S1)
+    fit("数据治理", 59, 374, C1[0], C1[1])
 
     # ===== 2. 模型推演 =====
     dashed(CX0, C2[0], CX1, C2[1], L2)
     label_box(LB0, C2[0] + 14, LB1, C2[1] - 14, "模型推演", L2)
     mod_cy = []
     for i, (m, note) in enumerate(MODULES):
-        y0 = 566 + i * 150
-        rect(180, y0, 330, y0 + 96, 12, "white", L2)
-        two(255, y0 + 48, m, note, 8.3, 6.4, L2, 1.2)
-        mod_cy.append(y0 + 48)
+        y0 = 496 + i * 132
+        rect(180, y0, 330, y0 + 90, 12, "white", L2)
+        two(255, y0 + 45, m, note, 8.3, 6.4, L2, 1.2)
+        mod_cy.append(y0 + 45)
     w(f"\\draw[line width={LW}pt,draw={L2},-{{Latex[length=1.4mm,width=1.0mm]}}] "
-      f"(255,{mod_cy[0]+48:.1f}) -- (255,{mod_cy[1]-48:.1f});")
+      f"(255,{mod_cy[0]+45:.1f}) -- (255,{mod_cy[1]-45:.1f});")
     br_cy = []
     for i, b in enumerate(BRANCH):
-        y0 = 540 + i * 78
+        y0 = 480 + i * 66
         rect(390, y0, 650, y0 + 56, 10, "white", L2)
         node(520, y0 + 28, b, 8.3, L2)
         br_cy.append(y0 + 28)
@@ -185,30 +194,32 @@ def draw(ts):
     for y in br_cy:
         line(650, y, 676, y, L2)
     line(676, br_cy[0], 676, br_cy[-1], L2)
-    line(676, 685, 700, 685, L2)
-    rect(700, 540, 830, 830, 12, "white", L2)
-    two(765, 685, "内涝预报", "核心模型", 8.8, 7.0, L2, 1.4)
-    dbl_arrow(685, 836, 872, L2)
-    rect(878, 540, 946, 830, 12, "white", L2)
-    vtext(912, 600, 770, "积水深度预警", L2, 8.3)
+    line(676, 607, 700, 607, L2)
+    rect(700, 480, 830, 734, 12, "white", L2)
+    two(765, 607, "内涝预报", "核心模型", 8.8, 7.0, L2, 1.4)
+    dbl_arrow(607, 836, 872, L2)
+    rect(878, 480, 946, 734, 12, "white", L2)
+    vtext(912, 540, 690, "积水深度预警", L2, 8.3)
+    fit("模型推演", 480, 734, C2[0], C2[1])
 
-    varrow(MID, 434, 466, L2)
-    varrow(MID, 1014, 1046, L3)
+    varrow(MID, 408, 444, L2)
+    varrow(MID, 768, 800, L3)
 
     # ===== 3. 预警联动 =====
     dashed(CX0, C3[0], CX1, C3[1], L3)
     label_box(LB0, C3[0] + 14, LB1, C3[1] - 14, "预警联动", L3)
-    pill(300, 1028, 700, 1078, "风险研判与分级预警", H3, L3)
-    rect(300, 1092, 700, 1162, 10, "white", L3)
-    node(500, 1127, "内涝风险实时研判", 8.6, L3, True)
+    pill(300, 802, 700, 852, "风险研判与分级预警", H3, L3)
+    rect(300, 866, 700, 936, 10, "white", L3)
+    node(500, 901, "内涝风险实时研判", 8.6, L3, True)
     kids = [208, 388, 568, 748]
-    line(500, 1162, 500, 1200, L3)
-    line(kids[0] + 80, 1200, kids[-1] + 80, 1200, L3)
+    line(500, 936, 500, 966, L3)
+    line(kids[0] + 80, 966, kids[-1] + 80, 966, L3)
     for k, txt in zip(kids, CHILD):
-        line(k + 80, 1200, k + 80, 1232, L3)
-        rect(k, 1232, k + 160, 1304, 10, "white", L3)
-        node(k + 80, 1268, txt, 8.0, L3)
-    varrow(500, 1344, 1370, L3, 30, 64, 14)
+        line(k + 80, 966, k + 80, 1004, L3)
+        rect(k, 1004, k + 160, 1076, 10, "white", L3)
+        node(k + 80, 1040, txt, 8.0, L3)
+    fit("预警联动", 802, 1076, C3[0], C3[1])
+    varrow(500, 1090, 1122, L3, 30, 64, 14)
 
     # ===== 4. 结论条 =====
     rect(CX0, C4[0], CX1, C4[1], 8, t2["bar"], t2["line"], 0.8)

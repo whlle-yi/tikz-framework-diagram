@@ -131,6 +131,19 @@ def tree(trunk_x, centers, child_edge, side="right", parent=None, parent_y=None)
         line(parent, parent_y, trunk_x, parent_y)
 
 
+def fit_blocks(pairs, pad_max=42):
+    """容器必须贴着内容包：逐个检查（名称, 内容底边, 容器底边），超了就报错。
+
+    先排内容、再套容器；反过来一定会留出一大块空白。
+    """
+    for name, content_bot, box_bot in pairs:
+        gap = box_bot - content_bot
+        if gap > pad_max:
+            raise AssertionError(f"{name}: 容器底部留白 {gap} > {pad_max}")
+        if gap < 0:
+            raise AssertionError(f"{name}: 内容超出容器 {gap}")
+
+
 # ---------------------------------------------------------------- 模板
 HEADER = r"""% !TEX program = xelatex
 \documentclass[tikz,border=6pt]{standalone}
