@@ -7,6 +7,11 @@
 LW = 0.7
 MONO_LINE, MONO_HEAD, MONO_SIDE = "monoLine", "monoHead", "monoSide"
 
+# 箭头比例令牌：头长 / 头宽 / 轴宽；区块通道、标签通道与内容区左边界
+ARROW_SW, ARROW_HW, ARROW_HH = 26, 62, 36
+ARROW_GAP = 78
+CONTENT_X0 = 170
+
 _out = []
 
 
@@ -67,11 +72,15 @@ def dashed(x0, y0, x1, y1, stroke=MONO_LINE):
       f"({x0:.1f},{y0:.1f}) rectangle ({x1:.1f},{y1:.1f});")
 
 
-def label(x0, y0, x1, y1, text, stroke=MONO_LINE):
-    """左侧竖排标签 + 内嵌右向块箭头（箭尾与框共边）。"""
+def label(x0, y0, x1, y1, text, stroke=MONO_LINE, content_x=CONTENT_X0):
+    """左侧竖排标签 + 内嵌右向块箭头（箭尾与框共边）。
+
+    轴长 32、头长 42；头半高 25、轴半高 12。尖端必须停在内容区左侧 ≥ 10 处。
+    """
     cy = (y0 + y1) / 2
-    sh, hd = 12, 23
-    xsh, xhd = x1 + 14, x1 + 46
+    sh, hd = 12, 25
+    xsh, xhd = x1 + 32, x1 + 74
+    assert xhd + 10 <= content_x, f"标签箭头戳进内容区: 尖端 {xhd} vs 内容 {content_x}"
     w(f"\\draw[line width={LW}pt,draw={stroke}] ({x0:.1f},{y1:.1f}) -- ({x0:.1f},{y0:.1f}) -- "
       f"({x1:.1f},{y0:.1f}) -- ({x1:.1f},{cy-sh:.1f});")
     w(f"\\draw[line width={LW}pt,fill=white,draw={stroke}] ({x1:.1f},{cy-sh:.1f}) -- "
@@ -124,8 +133,17 @@ def line(x0, y0, x1, y1, stroke=MONO_LINE, lw=LW, dash=False):
     w(f"\\draw[{st}] ({x0:.1f},{y0:.1f}) -- ({x1:.1f},{y1:.1f});")
 
 
-def varrow(cx, y0, y1, stroke=MONO_LINE, sw=34, hw=76, hh=18):
-    assert y1 - y0 >= hh + 8, f"箭头太矮 {y1-y0} < {hh}+8"
+def check_arrow(L, sw, hw, hh, name="块箭头"):
+    """四条比例约束：头不扁、头够宽、箭轴够长。L 为箭头总长。"""
+    assert hh >= 0.5 * hw, f"{name}: 头长 {hh} < 头宽 {hw}/2，会画成一根针"
+    assert hw >= 1.8 * sw, f"{name}: 头宽 {hw} 相对轴宽 {sw} 不够"
+    shaft = L - hh
+    assert shaft >= 0.9 * hh, f"{name}: 箭轴 {shaft} < 0.9×头长 {hh}，头尾都太短"
+
+
+def varrow(cx, y0, y1, stroke=MONO_LINE,
+           sw=ARROW_SW, hw=ARROW_HW, hh=ARROW_HH):
+    check_arrow(y1 - y0, sw, hw, hh)
     yh = y1 - hh
     w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
       f"({cx-sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{yh:.1f}) -- "
@@ -133,8 +151,9 @@ def varrow(cx, y0, y1, stroke=MONO_LINE, sw=34, hw=76, hh=18):
       f"({cx-sw/2:.1f},{yh:.1f}) -- cycle;")
 
 
-def hvarrow(y, x0, x1, stroke=MONO_LINE, sw=34, hw=76, hh=18):
-    assert x1 - x0 >= hh + 8, f"箭头太短 {x1-x0}"
+def hvarrow(y, x0, x1, stroke=MONO_LINE,
+            sw=ARROW_SW, hw=ARROW_HW, hh=ARROW_HH):
+    check_arrow(x1 - x0, sw, hw, hh)
     xh = x1 - hh
     w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
       f"({x0:.1f},{y-sw/2:.1f}) -- ({xh:.1f},{y-sw/2:.1f}) -- ({xh:.1f},{y-hw/2:.1f}) -- "
@@ -143,24 +162,28 @@ def hvarrow(y, x0, x1, stroke=MONO_LINE, sw=34, hw=76, hh=18):
 
 
 def thin(cx, y0, y1, stroke=MONO_LINE):
-    w(f"\\draw[line width={LW}pt,draw={stroke},-{{Latex[length=1.3mm,width=0.9mm]}}] "
+    assert y1 - y0 >= 30, f"细箭头箭身太短 {y1-y0} < 30"
+    w(f"\\draw[line width={LW}pt,draw={stroke},-{{Latex[length=1.5mm,width=1.0mm]}}] "
       f"({cx:.1f},{y0:.1f}) -- ({cx:.1f},{y1:.1f});")
 
 
 def vdbl(cx, y0, y1, stroke=MONO_LINE):
     """竖直双向箭头：引擎与复核之间这种上下关系用它。"""
+    assert y1 - y0 >= 28, f"双向箭头太短 {y1-y0}"
     w(f"\\draw[line width={LW}pt,draw={stroke},"
-      f"{{Latex[length=1.3mm,width=0.9mm]}}-{{Latex[length=1.3mm,width=0.9mm]}}] "
+      f"{{Latex[length=1.5mm,width=1.0mm]}}-{{Latex[length=1.5mm,width=1.0mm]}}] "
       f"({cx:.1f},{y0:.1f}) -- ({cx:.1f},{y1:.1f});")
 
 
 def dbl(y, x0, x1, stroke=MONO_LINE):
-    h, s = 21, 7
+    """水平双向箭头：头长 20、头半高 24、轴半高 8。"""
+    hl, h, s = 20, 24, 8
+    assert x1 - x0 >= 2 * hl + 20, f"双向箭头太短 {x1-x0}"
     w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
-      f"({x0+11:.1f},{y-s:.1f}) -- ({x1-11:.1f},{y-s:.1f}) -- ({x1-11:.1f},{y-h:.1f}) -- "
-      f"({x1:.1f},{y:.1f}) -- ({x1-11:.1f},{y+h:.1f}) -- ({x1-11:.1f},{y+s:.1f}) -- "
-      f"({x0+11:.1f},{y+s:.1f}) -- ({x0+11:.1f},{y+h:.1f}) -- ({x0:.1f},{y:.1f}) -- "
-      f"({x0+11:.1f},{y-h:.1f}) -- cycle;")
+      f"({x0+hl:.1f},{y-s:.1f}) -- ({x1-hl:.1f},{y-s:.1f}) -- ({x1-hl:.1f},{y-h:.1f}) -- "
+      f"({x1:.1f},{y:.1f}) -- ({x1-hl:.1f},{y+h:.1f}) -- ({x1-hl:.1f},{y+s:.1f}) -- "
+      f"({x0+hl:.1f},{y+s:.1f}) -- ({x0+hl:.1f},{y+h:.1f}) -- ({x0:.1f},{y:.1f}) -- "
+      f"({x0+hl:.1f},{y-h:.1f}) -- cycle;")
 
 
 # ---------------------------------------------------------------- 版面检查

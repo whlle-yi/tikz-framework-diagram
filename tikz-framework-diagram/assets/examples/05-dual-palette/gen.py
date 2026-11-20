@@ -38,8 +38,15 @@ def dashed(x0, y0, x1, y1, stroke):
       f"({x0:.1f},{y0:.1f}) rectangle ({x1:.1f},{y1:.1f});")
 
 
-def varrow(cx, y0, y1, stroke, sw=34, hw=76, hh=18):
-    assert y1 - y0 >= hh + 8, f"箭头太矮 {y1-y0}"
+def check_arrow(L, sw, hw, hh, name="块箭头"):
+    assert hh >= 0.5 * hw, f"{name}: 头长 {hh} < 头宽 {hw}/2"
+    assert hw >= 1.8 * sw, f"{name}: 头宽 {hw} 相对轴宽 {sw} 不够"
+    shaft = L - hh
+    assert shaft >= 0.9 * hh, f"{name}: 箭轴 {shaft} < 0.9×头长 {hh}"
+
+
+def varrow(cx, y0, y1, stroke, sw=26, hw=62, hh=36):
+    check_arrow(y1 - y0, sw, hw, hh)
     yh = y1 - hh
     w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
       f"({cx-sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{yh:.1f}) -- "
@@ -47,11 +54,15 @@ def varrow(cx, y0, y1, stroke, sw=34, hw=76, hh=18):
       f"({cx-sw/2:.1f},{yh:.1f}) -- cycle;")
 
 
-def label_box(x0, y0, x1, y1, text, stroke):
-    """左侧竖排标签 + 内嵌右向块箭头（箭尾与框共边）。"""
+def label_box(x0, y0, x1, y1, text, stroke, content_x=172):
+    """左侧竖排标签 + 内嵌右向块箭头（箭尾与框共边）。
+
+    轴长 32、头长 42；尖端停在内容区左侧 ≥ 10 处。
+    """
     cy = (y0 + y1) / 2
-    sh, hd = 12, 23          # 轴半高 / 头半高
-    xsh, xhd = x1 + 14, x1 + 46
+    sh, hd = 12, 25          # 轴半高 / 头半高
+    xsh, xhd = x1 + 32, x1 + 74
+    assert xhd + 10 <= content_x, f"标签箭头戳进内容区: {xhd} vs {content_x}"
     w(f"\\draw[line width={LW}pt,draw={stroke}] ({x0:.1f},{y1:.1f}) -- ({x0:.1f},{y0:.1f}) -- "
       f"({x1:.1f},{y0:.1f}) -- ({x1:.1f},{cy-sh:.1f});")
     w(f"\\draw[line width={LW}pt,fill=white,draw={stroke}] ({x1:.1f},{cy-sh:.1f}) -- "
@@ -113,12 +124,13 @@ def line(x0, y0, x1, y1, stroke):
 
 
 def dbl_arrow(cy, x0, x1, stroke):
-    h, s = 21, 7
+    hl, h, s = 20, 24, 8
+    assert x1 - x0 >= 2 * hl + 20, f"双向箭头太短 {x1-x0}"
     w(f"\\draw[fill=white,draw={stroke},line width={LW}pt] "
-      f"({x0+11:.1f},{cy-s:.1f}) -- ({x1-11:.1f},{cy-s:.1f}) -- ({x1-11:.1f},{cy-h:.1f}) -- "
-      f"({x1:.1f},{cy:.1f}) -- ({x1-11:.1f},{cy+h:.1f}) -- ({x1-11:.1f},{cy+s:.1f}) -- "
-      f"({x0+11:.1f},{cy+s:.1f}) -- ({x0+11:.1f},{cy+h:.1f}) -- ({x0:.1f},{cy:.1f}) -- "
-      f"({x0+11:.1f},{cy-h:.1f}) -- cycle;")
+      f"({x0+hl:.1f},{cy-s:.1f}) -- ({x1-hl:.1f},{cy-s:.1f}) -- ({x1-hl:.1f},{cy-h:.1f}) -- "
+      f"({x1:.1f},{cy:.1f}) -- ({x1-hl:.1f},{cy+h:.1f}) -- ({x1-hl:.1f},{cy+s:.1f}) -- "
+      f"({x0+hl:.1f},{cy+s:.1f}) -- ({x0+hl:.1f},{cy+h:.1f}) -- ({x0:.1f},{cy:.1f}) -- "
+      f"({x0+hl:.1f},{cy-h:.1f}) -- cycle;")
 
 
 # ---------------- 内容 ----------------
@@ -132,14 +144,14 @@ OUTCOME = "支撑「监测—推演—预警—处置」闭环的城市内涝实
 
 # ---------------- 几何（栅格单位，1 单位 = 1/72cm）----------------
 CX0, CX1 = 40, 960
-LB0, LB1 = 54, 112
-B0, B1 = 168, 946
-MID = (B0 + B1) / 2                      # 557
+LB0, LB1 = 54, 86
+B0, B1 = 172, 946
+MID = (B0 + B1) / 2                      # 559
 
 C1 = (40, 404)
-C2 = (450, 764)
-C3 = (804, 1086)
-C4 = (1126, 1194)
+C2 = (482, 764)
+C3 = (842, 1086)
+C4 = (1164, 1232)
 
 PAD_MAX = 42     # 容器到内容的最大允许留白（单位=1/72cm），超了就是"空一大块"
 
@@ -174,15 +186,15 @@ def draw(ts):
     label_box(LB0, C2[0] + 14, LB1, C2[1] - 14, "模型推演", L2)
     mod_cy = []
     for i, (m, note) in enumerate(MODULES):
-        y0 = 496 + i * 132
+        y0 = 528 + i * 132
         rect(180, y0, 330, y0 + 90, 12, "white", L2)
         two(255, y0 + 45, m, note, 8.3, 6.4, L2, 1.2)
         mod_cy.append(y0 + 45)
-    w(f"\\draw[line width={LW}pt,draw={L2},-{{Latex[length=1.4mm,width=1.0mm]}}] "
+    w(f"\\draw[line width={LW}pt,draw={L2},-{{Latex[length=1.5mm,width=1.0mm]}}] "
       f"(255,{mod_cy[0]+45:.1f}) -- (255,{mod_cy[1]-45:.1f});")
     br_cy = []
     for i, b in enumerate(BRANCH):
-        y0 = 480 + i * 66
+        y0 = 512 + i * 66
         rect(390, y0, 650, y0 + 56, 10, "white", L2)
         node(520, y0 + 28, b, 8.3, L2)
         br_cy.append(y0 + 28)
@@ -194,32 +206,32 @@ def draw(ts):
     for y in br_cy:
         line(650, y, 676, y, L2)
     line(676, br_cy[0], 676, br_cy[-1], L2)
-    line(676, 607, 700, 607, L2)
-    rect(700, 480, 830, 734, 12, "white", L2)
-    two(765, 607, "内涝预报", "核心模型", 8.8, 7.0, L2, 1.4)
-    dbl_arrow(607, 836, 872, L2)
-    rect(878, 480, 946, 734, 12, "white", L2)
-    vtext(912, 540, 690, "积水深度预警", L2, 8.3)
-    fit("模型推演", 480, 734, C2[0], C2[1])
+    line(676, 639, 700, 639, L2)
+    rect(700, 512, 824, 766, 12, "white", L2)
+    two(762, 639, "内涝预报", "核心模型", 8.8, 7.0, L2, 1.4)
+    dbl_arrow(639, 824, 884, L2)
+    rect(884, 512, 946, 766, 12, "white", L2)
+    vtext(915, 572, 722, "积水深度预警", L2, 8.3)
+    fit("模型推演", 512, 766, C2[0], C2[1])
 
-    varrow(MID, 408, 444, L2)
-    varrow(MID, 768, 800, L3)
+    varrow(MID, 404, 404 + 78, L2)
+    varrow(MID, 764, 764 + 78, L3)
 
     # ===== 3. 预警联动 =====
     dashed(CX0, C3[0], CX1, C3[1], L3)
     label_box(LB0, C3[0] + 14, LB1, C3[1] - 14, "预警联动", L3)
-    pill(300, 802, 700, 852, "风险研判与分级预警", H3, L3)
-    rect(300, 866, 700, 936, 10, "white", L3)
-    node(500, 901, "内涝风险实时研判", 8.6, L3, True)
+    pill(300, 842, 700, 892, "风险研判与分级预警", H3, L3)
+    rect(300, 906, 700, 976, 10, "white", L3)
+    node(500, 941, "内涝风险实时研判", 8.6, L3, True)
     kids = [208, 388, 568, 748]
-    line(500, 936, 500, 966, L3)
-    line(kids[0] + 80, 966, kids[-1] + 80, 966, L3)
+    line(500, 976, 500, 1006, L3)
+    line(kids[0] + 80, 1006, kids[-1] + 80, 1006, L3)
     for k, txt in zip(kids, CHILD):
-        line(k + 80, 966, k + 80, 1004, L3)
-        rect(k, 1004, k + 160, 1076, 10, "white", L3)
-        node(k + 80, 1040, txt, 8.0, L3)
-    fit("预警联动", 802, 1076, C3[0], C3[1])
-    varrow(500, 1090, 1122, L3, 30, 64, 14)
+        line(k + 80, 1006, k + 80, 1044, L3)
+        rect(k, 1044, k + 160, 1076, 10, "white", L3)
+        node(k + 80, 1060, txt, 8.0, L3)
+    fit("预警联动", 842, 1076, C3[0], C3[1])
+    varrow(MID, 1086, 1086 + 78, L3)
 
     # ===== 4. 结论条 =====
     rect(CX0, C4[0], CX1, C4[1], 8, t2["bar"], t2["line"], 0.8)

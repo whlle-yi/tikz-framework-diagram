@@ -66,12 +66,17 @@ def dashed(x0, y0, x1, y1, on=1.7, off=1.3, lw=0.7):
       f"({x0:.1f},{y0:.1f}) rectangle ({x1:.1f},{y1:.1f});")
 
 
-def varrow(cx, y0, y1, sw, hw, hh):
-    """向下空心块箭头。sw 轴宽 / hw 头宽 / hh 头长，均为像素。
+def check_arrow(L, sw, hw, hh, name="块箭头"):
+    """箭头比例硬约束：L 总长 / sw 轴宽 / hw 头宽 / hh 头长（栅格单位）。"""
+    assert hh >= 0.5 * hw, f"{name}: 头长 {hh} < 头宽 {hw}/2，会画成一根针"
+    assert hw >= 1.8 * sw, f"{name}: 头宽 {hw} 相对轴宽 {sw} 不够"
+    shaft = L - hh
+    assert shaft >= 0.9 * hh, f"{name}: 箭轴 {shaft} < 0.9×头长 {hh}，头尾都太短"
 
-    约束：y1-y0 >= hh+8，否则箭轴被头吃光，视觉上"只剩个头"。
-    """
-    assert y1 - y0 >= hh + 8, f"箭头太矮: {y1-y0} < {hh}+8"
+
+def varrow(cx, y0, y1, sw=26, hw=62, hh=36):
+    """向下空心块箭头。默认比例见 01-style.md；区块间距取 76–84。"""
+    check_arrow(y1 - y0, sw, hw, hh)
     yh = y1 - hh
     w(f"\\draw[fill=white,draw=black,line width={LW}pt] "
       f"({cx-sw/2:.1f},{y0:.1f}) -- ({cx+sw/2:.1f},{y0:.1f}) -- "
@@ -107,18 +112,22 @@ def box3d(x0, x1, ytop, ybot, dx, dy, title, body, tfs=8.4):
     mlines((x0 + x1) / 2, (ytop + ybot) / 2 + 3, body, 8.3, 30)
 
 
-def label_box(x0, y0, x1, y1, text, y_first, pitch, tip, fs=8.3):
+def label_box(x0, y0, x1, y1, text, y_first, pitch, content_x, fs=8.3):
     """竖排标签框 + 右向块箭头（箭尾与框共边）。
 
+    通道 = content_x - x1，按 ≥ 86 留；轴长 32、头长 42，尖端距内容区 ≥ 10。
     必须分三段画；末段不要 cycle，否则会斜拉一条线穿过框内。
     """
     cy = (y0 + y1) / 2
+    sh, hd = 12, 25
+    xsh, xhd = x1 + 32, x1 + 74
+    assert xhd + 10 <= content_x, "标签箭头戳进了内容区"
     w(f"\\draw[line width={LW}pt] ({x0:.1f},{y1:.1f}) -- ({x0:.1f},{y0:.1f}) -- "
-      f"({x1:.1f},{y0:.1f}) -- ({x1:.1f},{cy-12:.1f});")
-    w(f"\\draw[line width={LW}pt,fill=white] ({x1:.1f},{cy-12:.1f}) -- ({x1+11:.1f},{cy-12:.1f}) -- "
-      f"({x1+11:.1f},{cy-21:.1f}) -- ({tip:.1f},{cy:.1f}) -- ({x1+11:.1f},{cy+21:.1f}) -- "
-      f"({x1+11:.1f},{cy+12:.1f}) -- ({x1:.1f},{cy+12:.1f});")
-    w(f"\\draw[line width={LW}pt] ({x1:.1f},{cy+12:.1f}) -- ({x1:.1f},{y1:.1f}) -- ({x0:.1f},{y1:.1f});")
+      f"({x1:.1f},{y0:.1f}) -- ({x1:.1f},{cy-sh:.1f});")
+    w(f"\\draw[line width={LW}pt,fill=white] ({x1:.1f},{cy-sh:.1f}) -- ({xsh:.1f},{cy-sh:.1f}) -- "
+      f"({xsh:.1f},{cy-hd:.1f}) -- ({xhd:.1f},{cy:.1f}) -- ({xsh:.1f},{cy+hd:.1f}) -- "
+      f"({xsh:.1f},{cy+sh:.1f}) -- ({x1:.1f},{cy+sh:.1f});")
+    w(f"\\draw[line width={LW}pt] ({x1:.1f},{cy+sh:.1f}) -- ({x1:.1f},{y1:.1f}) -- ({x0:.1f},{y1:.1f});")
     chars_at((x0 + x1) / 2, y_first, pitch, text, fs)
 
 
@@ -169,11 +178,11 @@ def build(path="fig.tex"):
 if __name__ == "__main__":
     # 一个最小可用示例：虚线容器 + 标签框 + 两个框 + 树形支架 + 空心箭头
     dashed(141, 38, 1076, 366)
-    label_box(156, 52, 217, 357, "数据源头归集与预处理", 88.5, 25.7, 252)
-    box(284, 190, 647, 350, ["缺失值填充、异常值剔除、", "数据降噪、归一化归一处理"])
+    label_box(156, 52, 217, 357, "数据源头归集与预处理", 88.5, 25.7, 320)
+    box(320, 190, 647, 350, ["缺失值填充、异常值剔除、", "数据降噪、归一化归一处理"])
     box(695, 190, 1053, 350, ["样本标签标定、数据集分层、", "训练 / 验证 / 测试集拆分"])
-    cylinder(363.5, 61, 128, 90.5, 9, "工况实测数据库")
-    line(363.5, 149, 476.5, 149)
-    line(476.5, 149, 476.5, 169)
-    varrow(605, 368, 400, 39, 78, 15)
+    cylinder(399.5, 61, 128, 90.5, 9, "工况实测数据库")
+    line(399.5, 149, 512.5, 149)
+    line(512.5, 149, 512.5, 169)
+    varrow(605, 366, 444)   # 通道 78 → 头长 36 + 箭轴 42
     build()
