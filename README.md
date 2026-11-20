@@ -25,7 +25,7 @@ TikZ 默认画出来的图一看就是"代码生成"的：字号随意、留白�
 
 <img src="tikz-framework-diagram/assets/examples/04-color-scheme/preview.png" width="520">
 
-## 五种版式成品
+## 六组示例
 
 | 示例 | 版式 | 亮点 |
 |---|---|---|
@@ -34,6 +34,7 @@ TikZ 默认画出来的图一看就是"代码生成"的：字号随意、留白�
 | [`03-tech-architecture`](tikz-framework-diagram/assets/examples/03-tech-architecture) | 分层架构 | 圆柱、立体卡片、胶囊标题、双向箭头 |
 | [`04-color-scheme`](tikz-framework-diagram/assets/examples/04-color-scheme) | 分层架构（彩色） | 三色系色板、浅填充 + 深描边、细箭头 |
 | [`05-dual-palette`](tikz-framework-diagram/assets/examples/05-dual-palette) | 四层容器（多图元） | 圆柱 + 立体卡片 + 胶囊 + 块箭头 + 树形支架；单色 / 彩色两版合并在一个 LaTeX 文件 |
+| [`06-five-themes`](tikz-framework-diagram/assets/examples/06-five-themes) | 五种异构版式 | 校园碳核算 / 中药材追溯 / 认知筛查 / 乡村物流 / 电池闭环；含公共图元库 `kit.py` |
 
 每个目录都有 `fig.tex`（可 `xelatex` 直接编译）、`fig.pdf`、`preview.png`；
 `02` / `03` 还带 `gen.py`，是从坐标表生成 `.tex` 的完整例子。
