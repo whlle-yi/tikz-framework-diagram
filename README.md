@@ -1,6 +1,6 @@
 # tikz-flowchart-replica
 
-一个 **WorkBuddy / Claude 技能（skill）**：把位图流程图重绘为**像素级对齐**的 TikZ 矢量图。
+一个通用的 **Agent Skill**：把位图流程图重绘为**像素级对齐**的 TikZ 矢量图。
 
 适用于学术论文、技术文档里的研究框架图、技术路线图、系统架构图——这类图几十个同质方框、连线规则（树形支架、虚线分组容器）、中文排版（竖排标签、多行窄栏），靠肉眼重画必然错在行高、间距和连线端点上。这个技能把它变成"先测量、再生成、后比对"的确定性流程。
 
@@ -20,14 +20,18 @@
 
 ## 安装
 
-把 `tikz-flowchart-replica/` 子目录整个拷到 skills 目录即可：
+这是一个标准 **Agent Skill**：`SKILL.md` + YAML frontmatter + `references/` `scripts/` `assets/`，遵循通用的 skill 目录约定，凡支持该规范的智能体都能直接加载，不含任何平台专有依赖。
+
+把 `tikz-flowchart-replica/` 子目录整个拷到你的智能体的 skills 目录即可：
 
 ```bash
 git clone https://github.com/<you>/tikz-flowchart-replica.git
-cp -r tikz-flowchart-replica/tikz-flowchart-replica ~/.workbuddy/skills/
+cp -r tikz-flowchart-replica/tikz-flowchart-replica <你的 skills 目录>/
 ```
 
-装好后，说"用 tikz 复刻这个流程图"、"把这张图做成矢量图"、"redraw this diagram in LaTeX" 会自动触发。
+skills 目录通常位于用户主目录下（如 `~/.claude/skills/`），也可放在项目内随仓库分发；具体路径以你所用的客户端为准。
+
+装好后，说"用 tikz 复刻这个流程图"、"把这张图做成矢量图"、"redraw this diagram in LaTeX" 即可触发。
 
 ## 环境依赖
 
