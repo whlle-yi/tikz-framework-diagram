@@ -1,111 +1,107 @@
-# tikz-flowchart-replica
+# tikz-framework-diagram
 
-一个通用的 **Agent Skill**：把位图流程图重绘为**像素级对齐**的 TikZ 矢量图。
+一个 **Agent Skill**：用 TikZ 画中文学术风格的**研究框架图 / 技术路线图 / 系统架构图**。
 
-适用于学术论文、技术文档里的研究框架图、技术路线图、系统架构图——这类图几十个同质方框、连线规则（树形支架、虚线分组容器）、中文排版（竖排标签、多行窄栏），靠肉眼重画必然错在行高、间距和连线端点上。这个技能把它变成"先测量、再生成、后比对"的确定性流程。
+TikZ 默认画出来的图一看就是"代码生成"的：字号随意、留白不匀、箭头是实心粗箭头。
+这很正常——TikZ 只管几何，不管版面。而这个技能把"论文插图应该长什么样"编码成了一套**设计令牌 + 版式骨架 + 图元库**，
+让输出直接具备期刊插图的排版质感：白底黑线、灰阶分层、严格正交、留白均匀。
 
-仓库本身是**承载这个 skill 的项目**：README / LICENSE 等外围文件在根目录，skill 本体在 [`tikz-flowchart-replica/`](tikz-flowchart-replica) 子目录，结构与安装到 skills 目录里的完全一致，拷走即用。
+> 仓库是承载这个 skill 的项目：README / LICENSE 在根目录，skill 本体在 [`tikz-framework-diagram/`](tikz-framework-diagram) 子目录，
+> 结构与安装到 skills 目录里的完全一致，拷走即用，无平台专有依赖。
 
-## 效果
+## 风格长什么样
 
-| 示例 | 内容 | 规模 |
+- **白底 + 黑线**，灰阶只用于表达层级：`#F2F2F2` 侧边列 / `#D9D9D9` 区块标题 / `#BFBFBF` 顶层分组
+- **严格三级网格**：栏 → 行 → 元素，同类元素同高同宽
+- **中文竖排标签**：左侧一条窄框，单字一行，首末字与框边对称
+- **虚线只管分组**，不用于强调；点线只用于次级容器
+- **两种箭头**：空心块箭头（层级递进）、细实心箭头（元素流转）
+- **字号只有 4 级**：11pt 标题 / 8.3pt 粗体区块标题 / 8.3pt 正文 / 6.5pt 小注
+
+<img src="tikz-framework-diagram/assets/examples/02-research-framework/preview.png" width="420"> <img src="tikz-framework-diagram/assets/examples/03-tech-architecture/preview.png" width="420">
+
+## 三种版式成品
+
+| 示例 | 版式 | 亮点 |
 |---|---|---|
-| [01 顶层规划图](tikz-flowchart-replica/assets/examples/01-top-level-plan) | 工业大模型落地总体顶层规划 | 单列 5 段，约 20 个元素 |
-| [02 研究框架图](tikz-flowchart-replica/assets/examples/02-research-framework) | 研究内容 / 研究方法 / 研究步骤三列框架 | 约 60 个元素、5 个虚线容器 |
-| [03 技术架构图](tikz-flowchart-replica/assets/examples/03-tech-architecture) | 数据处理 → 模型搭建 → 模型优化 → 成果落地 | 约 70 个元素，含圆柱、立体卡片、竖排标签 |
+| [`01-top-level-plan`](tikz-framework-diagram/assets/examples/01-top-level-plan) | 单列纵向 + 左侧贯穿大箭头 | 最小可用样例 |
+| [`02-research-framework`](tikz-framework-diagram/assets/examples/02-research-framework) | 三列框架（步骤 / 内容 / 方法） | 5 个虚线单元、树形支架、竖排标签 |
+| [`03-tech-architecture`](tikz-framework-diagram/assets/examples/03-tech-architecture) | 分层架构 | 圆柱、立体卡片、胶囊标题、双向箭头 |
 
-<img src="tikz-flowchart-replica/assets/examples/02-research-framework/preview.png" width="420"> <img src="tikz-flowchart-replica/assets/examples/03-tech-architecture/preview.png" width="420">
-
-> 复刻对象是已发表论文的插图，源图未随仓库分发，上面的图为复刻结果。各示例目录内都有 `fig.pdf` 与 `preview.png`。
+每个目录都有 `fig.tex`（可 `xelatex` 直接编译）、`fig.pdf`、`preview.png`；
+`02` / `03` 还带 `gen.py`，是从坐标表生成 `.tex` 的完整例子。
 
 ## 安装
 
-这是一个标准 **Agent Skill**：`SKILL.md` + YAML frontmatter + `references/` `scripts/` `assets/`，遵循通用的 skill 目录约定，凡支持该规范的智能体都能直接加载，不含任何平台专有依赖。
-
-把 `tikz-flowchart-replica/` 子目录整个拷到你的智能体的 skills 目录即可：
+标准 **Agent Skill**：`SKILL.md` + YAML frontmatter + `references/` `scripts/` `assets/`，
+遵循通用 skill 目录约定，凡支持该规范的智能体都能直接加载。
 
 ```bash
-git clone https://github.com/<you>/tikz-flowchart-replica.git
-cp -r tikz-flowchart-replica/tikz-flowchart-replica <你的 skills 目录>/
+git clone https://github.com/whlle-yi/tikz-framework-diagram.git
+cp -r tikz-framework-diagram/tikz-framework-diagram <你的 skills 目录>/
 ```
 
-skills 目录通常位于用户主目录下（如 `~/.claude/skills/`），也可放在项目内随仓库分发；具体路径以你所用的客户端为准。
+skills 目录通常在用户主目录下（如 `~/.claude/skills/`），也可放在项目内随仓库分发；具体路径以你所用的客户端为准。
 
-装好后，说"用 tikz 复刻这个流程图"、"把这张图做成矢量图"、"redraw this diagram in LaTeX" 即可触发。
+## 怎么用
 
-## 环境依赖
+装好后直接说需求即可：
 
-- TeX Live，需 `xelatex` + `xeCJK` + `fontspec`
-- 中文字体：Windows 用 `Microsoft YaHei`；其它平台改 `\setCJKmainfont`（思源黑体 / Noto Sans CJK 均可）
-- Python 3.8+：`pip install numpy pillow pymupdf`
+> "帮我画一张技术路线图：分四层，数据采集 → 模型训练 → 模型优化 → 成果落地，每层三四个环节，中文标注，论文用。"
 
-## 技能怎么工作
+技能会走这条链路：
 
-四条铁律：
-
-1. **先量后画** —— 所有坐标来自像素测量，不靠目测
-2. **坐标即像素** —— `x=0.0138889cm, y=-0.0138889cm`，1 单位 = 1px = 1/72cm，代码里直接写原图坐标
-3. **用脚本生成 TikZ** —— 几十个节点手写必错；数据表与渲染函数分离
-4. **必须叠色比对** —— 渲染 → 叠色 → 找差异 → 改生成器 → 再比对，直到线条重合
-
-七步工作流：分清图与页面 → 量取几何 → 工程配置 → 拆解图元 → 写生成器 → 编译 → 叠色迭代。详见 [`SKILL.md`](tikz-flowchart-replica/SKILL.md) 与 [`references/`](tikz-flowchart-replica/references)。
+1. **定版式** —— 从五种骨架里选（单列 / 三列框架 / 分层架构 / 树形分解 / 矩阵对照），先出层级清单
+2. **套令牌** —— 字号、灰阶、线宽、圆角、间距、箭头尺寸全部取自令牌表
+3. **选图元** —— 矩形 / 圆角 / 胶囊 / 圆柱 / 立体卡片 / 块箭头 / 树形支架 / 共边标签框
+4. **写生成器** —— 用 `scaffold.py` 的数据表结构，不手写 `.tex`
+5. **编译** —— `xelatex`，中文字体走 `xeCJK`
+6. **自检** —— 过一遍 12 项检查清单再交付
 
 ## 仓库结构
 
 ```
 .
-├── README.md                  ← 你正在看的
+├── README.md
 ├── LICENSE
 ├── .gitignore
 ├── .gitattributes
-└── tikz-flowchart-replica/    ← skill 本体
-    ├── SKILL.md               入口：四条铁律 + 7 步工作流 + 索引
-    ├── references/            方法详解，按需加载
-    │   ├── 01-measure.md      从位图量取几何：三类扫描、虚线识别、字号推算、ASCII 结构图
-    │   ├── 02-tex-setup.md    工程配置：单位、字号 px→pt 换算表、线宽、颜色、编译
-    │   ├── 03-shapes.md       图元库：矩形/圆角/胶囊/圆柱/立体卡片/块箭头/树形支架/共边标签框
-    │   ├── 04-text.md         中文排版：字号=字宽、逐字逐行定位、竖排、行距、换行照抄
-    │   ├── 05-verify.md       叠色比对：1:1 渲染、偏移换算、症状→修法对照表
-    │   └── 06-pitfalls.md     15 条真实踩坑
+└── tikz-framework-diagram/          ← skill 本体
+    ├── SKILL.md                     入口：三条原则 + 6 步工作流 + 索引
+    ├── references/
+    │   ├── 01-style.md              视觉语言与设计令牌表（核心）
+    │   ├── 02-layouts.md            五种版式骨架 + 结构参数
+    │   ├── 03-shapes.md             图元库
+    │   ├── 04-text.md               中文排版：字号层级、逐字逐行定位、断行
+    │   ├── 05-tex-setup.md          工程配置：单位换算、字体、线宽、颜色
+    │   ├── 06-checklist.md          交付前 12 项自检
+    │   ├── 07-align-to-reference.md 附：需要与既有位图对齐时的度量与叠色方法
+    │   └── 08-pitfalls.md           16 条踩坑
     ├── scripts/
-    │   ├── measure.py         几何测量 CLI：hlines / vlines / edges / dashed / ink / row / col / art
-    │   ├── overlay.py         红蓝叠色比对，含差异图与"原图独有像素占比"
-    │   └── scaffold.py        生成器骨架：box / mlines / chars_at / varrow / cylinder / box3d / label_box / tree
-    └── assets/
-        └── examples/          三份已验证成品（fig.tex + gen.py + fig.pdf + preview.png）
+    │   ├── scaffold.py              生成器骨架（主工具）
+    │   ├── measure.py               几何测量 CLI（配合 07 使用）
+    │   └── overlay.py               红蓝叠色比对（配合 07 使用）
+    └── assets/examples/             三份可直接编译的成品
 ```
 
-## 单独跑示例
+## 试试看
 
 ```bash
-cd tikz-flowchart-replica/assets/examples/03-tech-architecture
-python gen.py && xelatex fig.tex              # 有 gen.py 的可从零复现
-cd ../01-top-level-plan && xelatex fig.tex    # 手写版，直接编译
+cd tikz-framework-diagram/assets/examples/03-tech-architecture
+python gen.py && xelatex fig.tex        # 改 gen.py 里的坐标表，重跑即可调版
 ```
-
-## 为什么不能直接画
-
-三个真实翻车案例，都是"看起来画对了"但实际错在细节：
-
-| 症状 | 真因 |
-|---|---|
-| 空心箭头只剩一个三角 | 总高 16px、箭头长 13px，箭轴只剩 3px。约束：**总高 ≥ 头长 + 8** |
-| 外围被画成一个大虚线框 | 实际是**三个并排的虚线单元**。虚线覆盖率只有 55%，用 0.7 的阈值扫描会整条漏掉 |
-| 方框被一条斜线穿过 | 三段式路径的末段加了 `-- cycle`，`cycle` 回到的是**当前子路径起点**，不是整条 path 的起点 |
-
-这些靠肉眼扫全图都发现不了，只有叠色图能一眼看出来。完整清单见 [`06-pitfalls.md`](tikz-flowchart-replica/references/06-pitfalls.md)。
 
 ## 适用范围与限制
 
-适用：正交排布的流程图、框架图、架构图，中文或中英混排，黑白/灰阶印刷风格。
+适用：正交排布的研究框架图、技术路线图、系统架构图、方法流程图；中文或中英混排；黑白灰阶印刷。
 
 不适用：
 
 - 自由曲线、手绘风格、大量斜线交叉的图
-- 需要还原滤镜、阴影、渐变的效果图
-- 位图里文字模糊到无法辨认（需先人工确认文字）
+- 需要还原阴影、渐变、滤镜的效果图
+- 数据可视化（那应该用 pgfplots / matplotlib，不是这套骨架）
 
-字体差异（笔画粗细、字面大小）无法做到与位图逐像素一致，叠色图上会有 1~2px 的亚像素边缘差，属正常范围。
+字体差异无法做到与任何参照图逐像素一致；这套技能追求的是**风格统一、排版规整**，不是像素级复制。
 
 ## License
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""红蓝叠色比对：原图 vs 我的渲染结果。
+"""红蓝叠色比对（配合 07-align-to-reference.md 使用，非必需）。
 
 颜色语义
 --------

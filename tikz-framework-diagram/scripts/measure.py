@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""位图几何测量工具：为 TikZ 复刻量取坐标。
+"""位图几何测量工具（配合 07-align-to-reference.md 使用，非必需）。
 
 用法示例
 --------
